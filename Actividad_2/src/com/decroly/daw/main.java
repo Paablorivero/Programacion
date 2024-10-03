@@ -148,6 +148,8 @@ public class main {
       
       int facto = 1;
       
+      //Hacemos el factorial
+      
       if (N8 < 0)
       {
     	  System.out.println("No se puede");
@@ -162,5 +164,95 @@ public class main {
     	  System.out.println("El factorial de " + N8 + " = " + facto);
       }
       
+//EJERCICIO 9
+      
+      System.out.println("\nEJERCICIO 9");
+      
+      //Pedimos la hora
+      
+      System.out.println("¿Que hora es?");
+      
+      int hora = entrada.nextInt();
+      
+      System.out.println("¿Que minuto es?");
+      
+      int minu = entrada.nextInt();
+      
+      System.out.println("¿Que segundos son?");
+      
+      int seg = entrada.nextInt();
+      
+      //Sumamos un segundo a la hora dandole condiciones
+        
+      if (seg < 59)
+      {
+    	 seg = seg + 1;
+    	
+    	 System.out.println("La hora en un seg es: " + hora + ":" + minu + ":" + seg);
+      }
+      
+      else
+      {
+    	  seg = 00;
+    	  
+    	  minu = minu + 1;
+    	  
+    	  if (minu < 59)
+    	  {    		  
+    		  System.out.println("La hora en un seg es: " + hora + ":" + minu + ":" + seg);
+    	  }
+    	  
+    	  else
+    	  {
+    		  minu = 00;
+    		  
+    		  hora = hora + 1;
+    		  
+    		  if (hora < 24)
+    		  {
+    			  
+    			  System.out.println("La hora en un seg es: " + hora + ":" + minu + ":" + seg);
+    		  }
+    		  
+    		  else
+    		  {
+    			  hora = 00;
+    			  
+    			  System.out.println("La hora en un seg es: " + hora + ":" + minu + ":" + seg);
+    		  }
+    	  }
+      }
+      
+//EJERCICIO 10
+      
+     System.out.println("\nEJERCICIO 10");
+     
+     //Leemos los  numeros
+     
+     int Num;
+     
+     int Negativos;
+     
+     int cont;
+     
+     while (cont <= 10)
+     {
+     if (Num = 0)
+     {
+    	 System.out.println("Introduce un numero que no sea 0");
+     }
+     else 
+     {
+    	 cont = cont +1;
+    	 if (Num < 0)
+    	 {
+    		 
+    	 }
+     }
+     }   
+     //Comprobamos si alguno es negativo
+     
+     
+     
       }// public static void  
 }//main
