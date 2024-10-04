@@ -1,4 +1,4 @@
-package com.decroly.daw;
+ package com.decroly.daw;
 
 import java.util.Scanner;
 
@@ -60,7 +60,7 @@ public class main {
        }
 //EJERCICIO 4
        
-       System.out.println("\nEJERCICIO 4");
+       System.out.println("\n" + "\nEJERCICIO 4");
        
        //Damos valor 2 a la variable y sumamos 2 hasta 200
        
@@ -71,7 +71,7 @@ public class main {
        
 //EJERCICIO 5
       
-      System.out.println("\nEJERCICIO 5");
+      System.out.println("\n" + "\nEJERCICIO 5");
       
       //Damos valor 1 a la variable y sumamos 1 hasta 200
       
@@ -85,7 +85,7 @@ public class main {
       
 //EJERCICIO 6
       
-      System.out.println("\nEJERCICIO 6");
+      System.out.println("\n" + "\nEJERCICIO 6");
       
       // Pedimos la variable N de los numeros que queremos obtener
       
@@ -101,7 +101,7 @@ public class main {
       
 //EJERCICIO 7
       
-      System.out.println("\nEJERCICIO 7");
+      System.out.println("\n" + "\nEJERCICIO 7");
       
       // Pedimos un numero para clasificarlo
       
@@ -227,32 +227,194 @@ public class main {
       
      System.out.println("\nEJERCICIO 10");
      
-     //Leemos los  numeros
+     //Damos valor a las variables
      
-     int Num;
-     
-     int Negativos;
+     int Negativos = 0;
      
      int cont;
      
-     while (cont <= 10)
+     //Aplicamos una condicion para que haga un contador de 10 numeros y cuente tambien los negativos
+
+     for (cont = 0; cont < 10; cont++)
      {
-     if (Num = 0)
-     {
-    	 System.out.println("Introduce un numero que no sea 0");
-     }
-     else 
-     {
-    	 cont = cont +1;
+      System.out.println("Dame un numero");
+
+      int Num = entrada.nextInt();
+
+     if (Num == 0)
+       {
+            cont = cont - 1;
+
+    	      System.out.println("Introduce un numero que no sea 0");
+       }
+
     	 if (Num < 0)
     	 {
-    		 
+    		 Negativos = Negativos + 1;
     	 }
      }
-     }   
-     //Comprobamos si alguno es negativo
+       
+     //Cuando el contador llegue a 10 mostramos el resultado
+
+     if (cont == 10) 
+     {
+      System.out.println("En los 10 numeros habia " + Negativos + " numeros negativos");
+     }
      
+//EJERCICIO 11
+      
+     System.out.println("\nEJERCICIO 11");
      
+     //Damos valor a las variables
      
+     int negativos = 0;
+
+     int Positivos = 0;
+     
+     int cont2;
+     
+     //Aplicamos una condicion para que haga un contador de 10 numeros y cuente tambien los negativos y positivos
+
+     for (cont2 = 0; cont2 < 10; cont2++)
+     {
+      System.out.println("Dame un numero");
+
+      int Num2 = entrada.nextInt();
+
+     if (Num2 == 0)
+       {
+            cont2 = cont2 - 1;
+
+    	      System.out.println("Introduce un numero que no sea 0");
+       }
+
+    	 if (Num2 < 0)
+    	 {
+    		 negativos = negativos + 1;
+    	 }
+
+       if (Num2 > 0)
+       {
+            Positivos = Positivos + 1;
+       }
+     }
+       
+     //Cuando el contador llegue a 10 mostramos el resultado
+     
+     if (cont2 == 10) 
+     {
+      System.out.println("En los 10 numeros habia " + negativos + " numeros negativos y " + Positivos + " numeros positivos");
+     }
+     
+//EJERCICIO 12
+      
+      System.out.println("\nEJERCICIO 12");
+     
+      //Damos valor a las variables
+
+      int negativos3 = 0;
+
+      int positivos3 = 0;
+
+      int cont3 = 1;
+
+      //Hacemos un contador de numeros positivos y negativos
+
+      while (cont3 >= 1)
+      {
+      System.out.println("Dame un numero");
+
+      int Num3 = entrada.nextInt();
+
+            if (Num3 < 0)
+            {
+                  negativos3 = negativos3 + 1;
+            }
+
+            if (Num3 > 0)
+            {
+                  positivos3 = positivos3 + 1;
+            }
+
+            if (Num3 == 0)
+            {
+                  cont3 = cont3 - cont3;
+            }
+      }
+  
+      //Mostramos el resultado en funcion de los negativos
+
+      if (cont3 == 0) 
+
+            if (negativos3 > 0) 
+            {
+                  System.out.println("En los numeros habia " + negativos3 + " numeros negativos y " + positivos3 + " numeros positivos");
+            }
+
+            if (negativos3 == 0)
+            {
+                  System.out.println("No habia ningun numero negativo");
+            }
+
+//EJERCICIO 13
+            System.out.println("\nEJERCICIO13");
+
+            int suma = 1;
+
+            int multi = 1;
+            for (int i = 2; i <= 10; i++)
+            {
+                  suma = suma + i;
+
+                  multi = multi * i;
+            }
+
+            System.out.println("La suma de los 10 primeros numeros naturales es: " + suma);
+
+            System.out.println("El producto de los 10 primeros numeros naturales es: " + multi);
+
+//EJERCICIO 14
+            System.out.println("\nEJERCICIO 14");
+
+            //Vemos cuantas horas y cual es la tarifa de Juan
+
+            System.out.println("¿Cuantas horas trabaja Juan?");
+
+            Double horas = entrada.nextDouble();
+            
+            System.out.println("¿Cuanto cobra Juan la hora?");
+
+            Double tarifa = entrada.nextDouble();
+
+            if (horas <=35)
+            {
+            Double sueldobruto1 = horas * tarifa;
+
+            System.out.println(sueldobruto1);
+            }
+
+            if (horas > 35)
+            {
+            Double tarifaextra = tarifa * 1.5;
+
+            Double horasExtra = horas - 35;
+
+            Double tarifatotal = 35 * tarifa;
+
+            Double tarifatotalextra = horasExtra * tarifaextra;
+
+            Double sueldobruto2 = tarifatotal + tarifatotalextra;
+
+            System.out.println(sueldobruto2);
+            }
+
+            
+
+
+
+           
+          
+
+        
       }// public static void  
 }//main
