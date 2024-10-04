@@ -281,22 +281,22 @@ public class main {
 
       int Num2 = entrada.nextInt();
 
-     if (Num2 == 0)
-       {
+         if (Num2 == 0){
+        	 
             cont2 = cont2 - 1;
 
-    	      System.out.println("Introduce un numero que no sea 0");
-       }
+    	    System.out.println("Introduce un numero que no sea 0");
+         }           
 
-    	 if (Num2 < 0)
-    	 {
+    	 if (Num2 < 0){
+    		 
     		 negativos = negativos + 1;
     	 }
 
-       if (Num2 > 0)
-       {
+    	 else{
+        	 
             Positivos = Positivos + 1;
-       }
+         }
      }
        
      //Cuando el contador llegue a 10 mostramos el resultado
@@ -385,12 +385,14 @@ public class main {
             System.out.println("¿Cuanto cobra Juan la hora?");
 
             Double tarifa = entrada.nextDouble();
+            
+            Double sueldobruto = 0.0;
+            
+            //Calculamos los sueldos brutos
 
             if (horas <=35)
             {
-            Double sueldobruto1 = horas * tarifa;
-
-            System.out.println(sueldobruto1);
+            sueldobruto = horas * tarifa;
             }
 
             if (horas > 35)
@@ -403,18 +405,39 @@ public class main {
 
             Double tarifatotalextra = horasExtra * tarifaextra;
 
-            Double sueldobruto2 = tarifatotal + tarifatotalextra;
-
-            System.out.println(sueldobruto2);
+            sueldobruto = tarifatotal + tarifatotalextra;
             }
-
             
-
-
-
-           
-          
-
-        
-      }// public static void  
-}//main
+          //Con el sueldo bruto sacamos el sueldo neto 
+            
+            if (sueldobruto <= 500)
+            {
+            	System.out.println("El sueldo de Juan sera de: " + sueldobruto);
+            			
+            }
+            
+            if (sueldobruto <= 900)
+            {
+            	Double resta1 = sueldobruto - 500;
+            	
+            	Double imp = resta1 * 0.25;
+            	
+            	Double sueldoneto = sueldobruto - imp;
+            	
+            	System.out.println("El sueldo de Juan sera de: " + sueldoneto);
+            }
+            
+            if (sueldobruto > 900)
+            {
+            	Double resta2 = sueldobruto - 900;
+            	
+            	Double imp = 400 * 0.25;
+            	
+            	Double imp1 = resta2 * 0.45;
+            	
+            	Double sueldoneto = sueldobruto - imp - imp1;
+            	
+            	System.out.println("El sueldo de Juan sera de: " + sueldoneto);
+            }                                 
+      }
+}
