@@ -35,55 +35,55 @@ public class main {
 				//Hacemos un contador para cada billete
 
 				do {
-				if (dinero >= 500) {
+					if (dinero >= 500) {
 
-					billete500++;
+						billete500++;
 
-					dinero = dinero - 500;
-				}
+						dinero = dinero - 500;
+					}
 
-				else if (dinero >= 200) {
+					else if (dinero >= 200) {
 					
-					billete200++;
+						billete200++;
 
-					dinero = dinero - 200;
-				}
+						dinero = dinero - 200;
+					}
 
-				else if (dinero >= 100) {
+					else if (dinero >= 100) {
 
-					billete100++;
+						billete100++;
 
-					dinero = dinero - 100;
-				}
+						dinero = dinero - 100;
+					}
 
-				else if (dinero >= 50) {
+					else if (dinero >= 50) {
 					
-					billete50++;
+						billete50++;
 
-					dinero = dinero - 50;
-				}
+						dinero = dinero - 50;
+					}
 
-				else if (dinero >= 20) {
+					else if (dinero >= 20) {
 					
-					billete20++;
+						billete20++;
 
-					dinero = dinero - 20;
-				}
+						dinero = dinero - 20;
+					}
 
-				else if (dinero >= 10) {
+					else if (dinero >= 10) {
 
-					billete10++;
+						billete10++;
 
-					dinero = dinero - 10;
-				}
+						dinero = dinero - 10;
+					}
 			
-				else {
+					else {
 
-					billete5++;
+						billete5++;
 
-					dinero = dinero - 5;
-				}
-			} while (dinero > 0);
+						dinero = dinero - 5;
+					}
+				} while (dinero > 0);
 
 			//Cuando terminamos el bucle mostamos el resultado
 
@@ -120,9 +120,11 @@ public class main {
 
 		System.out.println("\nEJERCICIO 2");
 
-		int opcion;
+		String opcion = "";
 
 		do {
+			entrada = new Scanner(System.in);
+
             // Marcamos las opciones a elegir
 
 			System.out.println("\nCALCULADORA");
@@ -133,76 +135,94 @@ public class main {
             System.out.println("5. SALIR");
             System.out.print("Ingrese su opción: ");
             
-            opcion = entrada.nextInt();
-            
-            //Leemos dos numeros y operamos en funcion de la opcion
+            opcion = entrada.nextLine();
 
-            if (opcion >= 1) {
+			//Segun el valor recogido el programa entrara a una opcion
 
-                if (opcion == 1) {
+			switch (opcion){
+
+				case "1":
+
+					System.out.println("\n----SUMA----");
+
+					System.out.print("Dime el primer numero: ");
+
+					double num1 = entrada.nextDouble();
+
+					System.out.print("Dime el segundo : ");
+
+					double num2 = entrada.nextDouble();
+
+					System.out.println("Resultado: " + (num1 + num2));
+					break;
+
+				case "2":
+
+					System.out.println("\n----RESTA----");
+
+					System.out.print("Dime el primer numero: ");
+
+					num1 = entrada.nextDouble();
+
+					System.out.print("Dime el segundo : ");
+
+					num2 = entrada.nextDouble();
+
+					System.out.println("Resultado: " + (num1 - num2));
+					break;
+
+				case "3":
+
+					System.out.println("\n----MULTIPLICACION----");
+	
+					System.out.print("Dime el primer numero: ");
+	
+					num1 = entrada.nextDouble();
+	
+					System.out.print("Dime el segundo : ");
+	
+					num2 = entrada.nextDouble();
+	
+					System.out.println("Resultado: " + (num1 * num2));
+					break;
 					
+				case "4":
+
+					System.out.println("\n----DIVISION----");
+		
 					System.out.print("Dime el primer numero: ");
+		
+					num1 = entrada.nextDouble();
+		
+					System.out.print("Dime el segundo : ");
+		
+					num2 = entrada.nextDouble();
+		
+						if (num2 == 0){
 
-                	double num1 = entrada.nextDouble();
+							System.out.println("No puedes dividir por 0");
+						} 
+	
+						else{
+	
+							System.out.println("Resultado: " + (num1 / num2));
+						}
+						
+					break;
 
-                	System.out.print("Dime el segundo : ");
+				case "5":
 
-                	double num2 = entrada.nextDouble();
+					System.out.println("Adios");
+					break;
 
-                    System.out.println("Resultado: " + (num1 + num2));
-				} 
+				default:
 
-				else if (opcion == 2) {
-
-					System.out.print("Dime el primer numero: ");
-
-                	double num1 = entrada.nextDouble();
-
-                	System.out.print("Dime el segundo : ");
-
-                	double num2 = entrada.nextDouble();
-
-                    System.out.println("Resultado: " + (num1 - num2));
-				} 
-
-				else if (opcion == 3) {
-
-					System.out.print("Dime el primer numero: ");
-
-                	double num1 = entrada.nextDouble();
-
-                	System.out.print("Dime el segundo : ");
-
-                	double num2 = entrada.nextDouble();
-
-                    System.out.println("Resultado: " + (num1 * num2));
-				} 
-
-				else if (opcion == 4) {
-
-					System.out.print("Dime el primer numero: ");
-
-                	double num1 = entrada.nextDouble();
-
-                	System.out.print("Dime el segundo : ");
-
-                	double num2 = entrada.nextDouble();
-
-                    if (num2 == 0) {
-
-                        System.out.println("No puedes dividir por 0");
-                    } 
-
-					else {
-
-                        System.out.println("Resultado: " + (num1 / num2));
-                    }
-                }
+					System.out.println("Introduce un valor correcto");
+					break;
 			}
-        } while (opcion != 5);
 
-        System.out.println("Adios");
+        } while (!opcion.equals("5"));
 
-	}// public static
+	}
 
-} //main
+}
