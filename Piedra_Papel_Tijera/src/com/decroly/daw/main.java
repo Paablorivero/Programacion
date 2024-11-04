@@ -24,7 +24,7 @@ public class main {
 
 		//INICIO Y DESCRIPCION DEL JUEGO
 		System.out.println("\nBIENVENIDO AL PIEDRA PAPEL TIJERA.");
-		System.out.println("Este juego consiste en partidas de 3 juegos de Piedra Papel Tijera.");
+		System.out.println("Este juego consiste en partidas de 3 en Piedra Papel Tijera.");
 		System.out.println("Se jugara contra la cpu y se podra consultar las partidas ganadas durante el juego.");
 
 		//MENU
@@ -45,70 +45,55 @@ public class main {
 				case "a":
 					for(int i = 0; i < 3; i++){
 
-						String jugadacpu = opcionescpu[seleccion.nextInt(opcionescpu.length)];
-
+					//CABECERA DE CADA JUGADA Y ELECCION DE JUGADOR Y CPU
 						System.out.println("\n//////JUEGO " + (i+1)  + "//////");
 						System.out.println("Escribe la jugada que quieres hacer");
 						System.out.println("P para piedra" + "\nL para papel" + "\nT para tijera");
 						System.out.print("¿Que eliges?: ");
 						String seljugador = entrada.nextLine();
 
+						String jugadacpu = opcionescpu[seleccion.nextInt(opcionescpu.length)];
+
+					//MOSTRAMOS LAS ELECCIONES
+
 						System.out.println("\nTU ELECCION: " + seljugador);
 						System.out.println("ELECCION CPU: " + jugadacpu);
 					
-						//EMPATE
-						if(seljugador.equalsIgnoreCase(jugadacpu) ){
-							System.out.println("=====EMPATE=====");
-						}
-
-					//GANADAS USUARIO SEGUN JUGADA
-
-						//SI SE JUEGA PIEDRA
-						if(seljugador.equalsIgnoreCase("P")){
-
-							if(jugadacpu.equalsIgnoreCase("T")){
-								System.out.println("+++++GANASTE+++++");
-								ganadausuario++;
+							//PARTIDAS EMPATADAS
+							if(seljugador.equalsIgnoreCase(jugadacpu) ){
+								System.out.println("=====EMPATE=====");
 							}
-							else if(!jugadacpu.equalsIgnoreCase("P")){
-								System.out.println("-----PERDISTE-----");
-								ganadacpu++;
-							}
-						}
 
-						//SI SE JUEGA PAPEL
-						if(seljugador.equalsIgnoreCase("L")){
+							//PARTIDAS GANADAS POR EL USUARIO 
+							if (seljugador.equalsIgnoreCase("P") && jugadacpu.equalsIgnoreCase("T") ||
+								seljugador.equalsIgnoreCase("L") && jugadacpu.equalsIgnoreCase("P") ||
+								seljugador.equalsIgnoreCase("T") && jugadacpu.equalsIgnoreCase("L")){
 
-							if(jugadacpu.equalsIgnoreCase("P")){
-							System.out.println("+++++GANASTE+++++");
-							ganadausuario++;
+									System.out.println("+++++GANASTE+++++");
+									ganadausuario++;
 							}
-							else if(!jugadacpu.equalsIgnoreCase("L")){
-								System.out.println("-----PERDISTE-----");
-								ganadacpu++;
-							}
-						}
 
-						//SI SE JUEGA TIJERA
-						if(seljugador.equalsIgnoreCase("T")){
-
-							if(jugadacpu.equalsIgnoreCase("L")){
-							System.out.println("+++++GANASTE+++++");
-							ganadausuario++;
+							//PARTIDAS GANADAS POR LA CPU
+							else if (jugadacpu.equalsIgnoreCase("P") && seljugador.equalsIgnoreCase("T") ||
+								 	jugadacpu.equalsIgnoreCase("L") && seljugador.equalsIgnoreCase("P") ||
+								 	jugadacpu.equalsIgnoreCase("T") && seljugador.equalsIgnoreCase("L")) {
+							
+										System.out.println("-----PERDISTE-----");
+										ganadacpu++;
 							}
-							else if(!jugadacpu.equalsIgnoreCase("T")){
-								System.out.println("-----PERDISTE-----");
-								ganadacpu++;
-							}
-						}
+					
+							//MOSTRAMOS EL MARCADOR DE LA PARTIDA
+							System.out.println("////MARCADOR////");
+							System.out.println("JUGADOR: " + ganadausuario);
+							System.out.println("CPU: " + ganadacpu);
 						
-						System.out.println("////MARCADOR////");
-						System.out.println("JUGADOR: " + ganadausuario);
-						System.out.println("CPU: " + ganadacpu);
 					}
+
+					//SE SUMA UN JUEGO POR PARTIDA GANADA
 					if(ganadausuario < ganadacpu){
 						juegoscpu++;
 					}
+
 					else if(ganadausuario > ganadacpu){
 						juegosusuario++;
 					}
@@ -132,6 +117,6 @@ public class main {
 		}while(!menu.equals("c"));
 
 		entrada.close();
-	}//public static
+	}
 
-}//main
+}
