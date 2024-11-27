@@ -52,8 +52,8 @@ public class Cliente {
     
      public String mostrarInfoCliente(){
         String getInfoCliente = String.format("INFO DEL CLIENTE" +
-        "\nDNI: %s, Nombre: %s, Codigo: %s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
-        this.dni, this.nombre, codigoSocio, this.direccion, this.nacimiento, this.nalquiladas, );
+        "\nDNI: %s, Nombre: %s, Codigo: Soc-0%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
+        this.dni, this.nombre, this.cod, this.direccion, this.nacimiento, this.nalquiladas);
         return getInfoCliente;
      }
 }
