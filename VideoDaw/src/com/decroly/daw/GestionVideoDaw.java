@@ -41,12 +41,44 @@ public class GestionVideoDaw {
 				String direccion = myUtils.leerTextoPantalla("\nAhora añade la direccion");
 				miFranquicia = new VideoDaw(cif, direccion);
 				System.out.println("\nFRANQUICIA REGISTRADA, ¡FELICIDADES!");
+				System.out.println(miFranquicia.InfoVideoDaw());
 					break;
 
 				case "2":
 				Pelicula nuevaPelicula;
 				System.out.println("\nREGISTRAR NUEVA PELICULA");	
-
+				String titulo = myUtils.leerTextoPantalla("\nEscribe el titulo de la pelicula");
+				for(int i = 0; i < 2; i++){
+					String genero = myUtils.leerTextoPantalla("\nEscribe el genero de la pelicula:" + 
+					"\n1.-ACCION" + "\n2.-COMEDIA" + "\n3.-DRAMA" + "\n4.-FANTASIA" + "\n5.-TERROR " + "\n6.-DOCUMENTALES");
+				
+					int nGenero = entrada.nextInt();
+					if (nGenero == 1){
+						nuevaPelicula = new Pelicula(titulo, Generos.ACCION);
+					}
+					if (nGenero == 2){
+						nuevaPelicula = new Pelicula(titulo, Generos.COMEDIA);
+					}
+					if (nGenero == 3){
+						nuevaPelicula = new Pelicula(titulo, Generos.DRAMA);
+					}
+					if (nGenero == 4){
+						nuevaPelicula = new Pelicula(titulo, Generos.FANTASIA);
+					}
+					if (nGenero == 5){
+						nuevaPelicula = new Pelicula(titulo, Generos.TERROR);
+					}
+					if (nGenero == 6){
+						nuevaPelicula = new Pelicula(titulo, Generos.DOCUMENTALES);
+						System.out.println("Pelicula registrada correctamente");
+						System.out.println(nuevaPelicula.InfoPelicula());
+					}
+					else{
+						System.out.println("ERROR. El dato introducido es invalido");
+					}
+				}
+				System.out.println("Pelicula registrada correctamente");
+				System.out.println(nuevaPelicula.InfoPelicula());					
 					break;
 
 				case "3":

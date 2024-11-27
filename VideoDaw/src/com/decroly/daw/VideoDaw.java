@@ -38,7 +38,7 @@ public class VideoDaw {
         return nclientes;
     }
     
-    public String mostrarInfoVideoDaw(){
+    public String InfoVideoDaw(){
         String getInfoVideoDaw = String.format("INFO DEL VIDEOCLUB" +
         "\nCif: %s, Direccion: %s, Fecha de alta: %s, Nº de Peliculas: %s, Nº de clientes %s", 
         this.cif, this.direccion, this.alta, this.npeliculas, this.nclientes);

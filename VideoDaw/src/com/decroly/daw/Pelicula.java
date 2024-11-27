@@ -2,6 +2,7 @@ package com.decroly.daw;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class Pelicula {
     
@@ -10,7 +11,7 @@ public class Pelicula {
     //Atributos
     private int cod;
     private String titulo;
-    private String genero;
+    private Generos genero;
     private String registro;
     private String baja;
     private String alquiler;
@@ -18,7 +19,7 @@ public class Pelicula {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
     //Constructores
-    public Pelicula(String titulo, String genero){
+    public Pelicula(String titulo, Generos genero){
         this.cod = this.contador;
         this.contador++;
 
@@ -28,17 +29,13 @@ public class Pelicula {
         this.isAlquilada = false;
     }
 
-
-    public static int getContador() {
-        return contador;
-    }
     public int getcodPelicula() {
         return cod;
     }
     public String getTitulo() {
         return titulo;
     }
-    public String getGenero() {
+    public Generos getGenero() {
         return genero;
     }
     public String getfechaRegistro() {
@@ -58,9 +55,10 @@ public class Pelicula {
         String codigoPelicula = "Pel-0" + contador;
         return codigoPelicula;
     }
-    public String mostrarInfoPelicula(){
+    public String InfoPelicula(){
         String getInfoPelicula = String.format("INFO DE LA PELICULA" + "\nCod: Pel-0%s, Titulo: %s, Genero: %s, Registro: %s", 
         this.cod, this.titulo, this.genero, this.registro);
         return getInfoPelicula;
     }
-}
+    }
+
