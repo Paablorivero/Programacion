@@ -11,6 +11,11 @@ public class VideoDaw {
     private String alta;
     private int npeliculas;
     private int nclientes;
+    
+    private Cliente [] clientes;
+    private Pelicula [] peliculas;
+
+    private boolean esCreada = false;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
     //Contructores
@@ -18,7 +23,9 @@ public class VideoDaw {
         this.cif = cif;
         this.direccion = direccion;
         this.alta = LocalDateTime.now().format(formatter);
+        this.peliculas = new Pelicula[100];
         this.npeliculas = 0;
+        this.clientes = new Cliente[100];
         this.nclientes = 0;
     }
 
@@ -44,4 +51,20 @@ public class VideoDaw {
         this.cif, this.direccion, this.alta, this.npeliculas, this.nclientes);
         return getInfoVideoDaw;
     }
+
+    public String mostrarPeliculas(){
+     String peliculasDisponibles = "";
+     for(int i = 0; i < npeliculas; i++){
+        peliculasDisponibles  = peliculasDisponibles + peliculas [i].InfoPelicula();
+        }
+    return peliculasDisponibles;
+    }
+
+    //public boolean nuevoAlquiler(Pelicula alq){
+      //boolean isAdd = false;
+        //if(alq != null){
+          //  this.peliculas [npeliculas] = alq;
+            //this.npeliculas++;
+        //}
+    //}
 }

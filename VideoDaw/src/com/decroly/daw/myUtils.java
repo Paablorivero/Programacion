@@ -1,5 +1,7 @@
 package com.decroly.daw;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,5 +41,18 @@ public class myUtils {
             }
         } while (!isOk);
         return texto;
+    }
+
+    public static LocalDate leerFecha(String mensaje){
+        Scanner entrada = new Scanner(System.in);
+        String texto;
+
+        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        texto = myUtils.leerTextoPantalla(mensaje);
+        String dateString = entrada.next();
+
+        //convert String to LocalDate
+        LocalDate fechaLocalDate = LocalDate.parse(dateString, formatter);
+        return fechaLocalDate;
     }
 }

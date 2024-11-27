@@ -60,5 +60,5 @@ public class Pelicula {
         this.cod, this.titulo, this.genero, this.registro);
         return getInfoPelicula;
     }
-    }
+}
 
