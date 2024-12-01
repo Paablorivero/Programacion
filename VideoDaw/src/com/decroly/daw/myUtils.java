@@ -21,6 +21,13 @@ public class myUtils {
         return valor;
     }
 
+    public static int leerNumeroPantalla(int mensaje){
+        Scanner reader = new Scanner(System.in);
+        System.out.println(mensaje);
+        int valor = reader.nextInt();
+        return valor;
+    }
+
     public static boolean comprobarPatron(String patron, String texto)
     {
         boolean isOk = false;
@@ -48,7 +55,7 @@ public class myUtils {
         String texto;
 
         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        texto = myUtils.leerTextoPantalla(mensaje);
+        System.out.println("\nEscribe tu fecha de nacimiento en formato DD/MM/AAAA");
         String dateString = entrada.next();
 
         //convert String to LocalDate

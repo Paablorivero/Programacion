@@ -13,8 +13,8 @@ public class Pelicula {
     private String titulo;
     private Generos genero;
     private String registro;
-    private String baja;
-    private String alquiler;
+    private String fechaBaja;
+    private String fechaAlquiler;
     private boolean isAlquilada;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
@@ -42,23 +42,25 @@ public class Pelicula {
         return registro;
     }
     public String getfechaBaja() {
-        return baja;
+        return fechaBaja;
     }
     public String getfechaAlquiler() {
-        return alquiler;
+        return fechaAlquiler;
     }
     public boolean isAlquilada() {
         return isAlquilada;
     }
 
-    public String mostrarCodigoPelicula(){
-        String codigoPelicula = "Pel-0" + contador;
-        return codigoPelicula;
-    }
     public String InfoPelicula(){
-        String getInfoPelicula = String.format("INFO DE LA PELICULA" + "\nCod: Pel-0%s, Titulo: %s, Genero: %s, Registro: %s", 
+        String getInfoPelicula = String.format("\nCod: Pel-%s, Titulo: %s, Genero: %s, Registro: %s", 
         this.cod, this.titulo, this.genero, this.registro);
         return getInfoPelicula;
+    }
+
+    public boolean Alquiler(){
+        isAlquilada = true;
+        this.fechaAlquiler = LocalDateTime.now().format(formatter);
+        return isAlquilada;
     }
 }
 

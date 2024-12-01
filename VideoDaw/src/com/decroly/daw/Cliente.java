@@ -1,6 +1,8 @@
 package com.decroly.daw;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Cliente {
     private static int contador = 0;
@@ -49,16 +51,12 @@ public class Cliente {
     public int getNalquiladas() {
         return nalquiladas;
     }
-
-     public String mostrarCodigoSocio(){
-        String codigoSocio = "Soc-0" + contador;
-        return codigoSocio;
-     }
     
      public String InfoCliente(){
-        String getInfoCliente = String.format("INFO DEL CLIENTE" +
-        "\nDNI: %s, Nombre: %s, Codigo: Soc-0%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
+        String getInfoCliente = String.format( 
+        "\nDNI: %s, Nombre: %s, Codigo: Soc-%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
         this.dni, this.nombre, this.cod, this.direccion, this.nacimiento, this.nalquiladas );
         return getInfoCliente;
      }
+
 }
