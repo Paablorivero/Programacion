@@ -43,16 +43,23 @@ public class myUtils {
         return texto;
     }
 
-    public static LocalDate leerFecha(String mensaje){
+    public static LocalDate leerFecha(){
         Scanner entrada = new Scanner(System.in);
-        String texto;
 
         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        texto = myUtils.leerTextoPantalla(mensaje);
-        String dateString = entrada.next();
+        myUtils.imprimir("\nEscribe la fecha de nacimiento en formato DD/MM/AAAA");
+        String dateString = entrada.nextLine();
 
         //convert String to LocalDate
         LocalDate fechaLocalDate = LocalDate.parse(dateString, formatter);
         return fechaLocalDate;
     }
+    
+    public static int leerNumeroPantalla(int mensaje){
+        Scanner reader = new Scanner(System.in);
+        System.out.println(mensaje);
+        int valor = reader.nextInt();
+        return valor;
+    }
+
 }

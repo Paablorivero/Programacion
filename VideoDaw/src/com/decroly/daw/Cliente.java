@@ -49,16 +49,41 @@ public class Cliente {
     public int getNalquiladas() {
         return nalquiladas;
     }
-
-     public String mostrarCodigoSocio(){
-        String codigoSocio = "Soc-0" + contador;
-        return codigoSocio;
-     }
     
-     public String InfoCliente(){
-        String getInfoCliente = String.format("INFO DEL CLIENTE" +
-        "\nDNI: %s, Nombre: %s, Codigo: Soc-0%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
+    public String InfoCliente(){
+        String getInfoCliente = String.format( 
+        "\nDNI: %s, Nombre: %s, Codigo: Soc-%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
         this.dni, this.nombre, this.cod, this.direccion, this.nacimiento, this.nalquiladas );
         return getInfoCliente;
-     }
+    }
+
+    public boolean addPelicula(Pelicula p){
+        boolean isAdd = false;
+        if (p != null){
+            this.peliculasCliente[nalquiladas] = p;
+            nalquiladas++;
+        }
+        return isAdd;
+    }
+
+    public boolean elimPelicula(Pelicula p){
+        boolean isEliminated = false;
+        if (p != null){
+            this.peliculasCliente[nalquiladas] = null;
+            nalquiladas--;
+        }
+        return isEliminated;
+    }
+
+    public String mostrarPeliculas(){
+        String peliculasAlquiladas = "";
+        System.out.println("Peliculas alquiladas: ");
+        for(int i = 0; i < nalquiladas; i++){
+           System.out.println(peliculasCliente[i].InfoPelicula());
+           }
+       return peliculasAlquiladas;
+       }
+        
+    
 }
+

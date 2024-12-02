@@ -2,7 +2,6 @@ package com.decroly.daw;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class Pelicula {
     
@@ -12,9 +11,9 @@ public class Pelicula {
     private int cod;
     private String titulo;
     private Generos genero;
-    private String registro;
-    private String baja;
-    private String alquiler;
+    private LocalDateTime registro;
+    private String fechaBaja;
+    private String fechaAlquiler;
     private boolean isAlquilada;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
@@ -25,7 +24,7 @@ public class Pelicula {
 
         this.titulo = titulo;
         this.genero = genero;
-        this.registro = LocalDateTime.now().format(formatter);
+        this.registro = LocalDateTime.now();
         this.isAlquilada = false;
     }
 
@@ -38,27 +37,36 @@ public class Pelicula {
     public Generos getGenero() {
         return genero;
     }
-    public String getfechaRegistro() {
+    public LocalDateTime getfechaRegistro() {
         return registro;
     }
     public String getfechaBaja() {
-        return baja;
+        return fechaBaja;
     }
     public String getfechaAlquiler() {
-        return alquiler;
+        return fechaAlquiler;
     }
     public boolean isAlquilada() {
         return isAlquilada;
     }
 
-    public String mostrarCodigoPelicula(){
-        String codigoPelicula = "Pel-0" + contador;
-        return codigoPelicula;
-    }
     public String InfoPelicula(){
-        String getInfoPelicula = String.format("INFO DE LA PELICULA" + "\nCod: Pel-0%s, Titulo: %s, Genero: %s, Registro: %s", 
+        String getInfoPelicula = String.format("\nCod: Pel-%s, Titulo: %s, Genero: %s, Registro: %s", 
         this.cod, this.titulo, this.genero, this.registro);
         return getInfoPelicula;
     }
-}
+    
+    public String CodPelicula(){
+        String codigoPelicula = String.format("Numero: %s", this.cod);
+        return codigoPelicula;
+    }
+    public boolean Alquiler(){
+        this.isAlquilada = true;
+        return isAlquilada;
+    }
 
+    public boolean devolver(){
+        this.isAlquilada = false;
+        return isAlquilada;
+    }
+}
