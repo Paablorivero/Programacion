@@ -60,6 +60,7 @@ public class Pelicula {
         String codigoPelicula = String.format("Numero: %s", this.cod);
         return codigoPelicula;
     }
+    
     public boolean Alquiler(){
         this.isAlquilada = true;
         return isAlquilada;

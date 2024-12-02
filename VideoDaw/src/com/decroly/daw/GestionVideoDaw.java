@@ -140,7 +140,7 @@ public class GestionVideoDaw {
 				
 				//SELECCIONAR PELICULA
 					System.out.println("¿Que pelicula quieres alquilar?");
-					System.out.println(miFranquicia.mostrarPeliculasNoAlquiladas());
+					System.out.println(miFranquicia.mostrarPeliculasNoAlquiladas(miFranquicia));
 					int pelicula = entrada.nextInt();
 					miFranquicia.alquilarPelicula(cliente, pelicula);
 
@@ -154,18 +154,24 @@ public class GestionVideoDaw {
 					break;
 
 				case "5": //DEVOLVER PELICULA
-				System.out.println("Quien va a devolver la pelicula");
-				System.out.println(miFranquicia.mostrarClientes());	 
-				int cliente = entrada.nextInt();
-
-				System.out.println("Selecciona pelicula a devolver");
-				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
-				int pelicula = entrada.nextInt();
-
-				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
-				
-				miFranquicia.obtenerClientePorPosicion(cliente).elimPelicula(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
-					break;
+				if(miFranquicia != null && nuevaPelicula != null && nuevoCliente != null){
+					System.out.println("Quien va a devolver la pelicula");
+					System.out.println(miFranquicia.mostrarClientes());	 
+					int bajacliente = entrada.nextInt();
+					if(miFranquicia.obtenerClientePorPosicion(bajacliente).getNalquiladas() > 0){
+						System.out.println("Selecciona pelicula a devolver");
+						System.out.println(miFranquicia.obtenerClientePorPosicion(bajacliente).mostrarPeliculas());
+						int bajapelicula = entrada.nextInt();
+						miFranquicia.obtenerClientePorPosicion(bajacliente).elimPelicula
+						(miFranquicia.obtenerPeliculaPorPosicion(bajapelicula));
+					}
+					else{
+						System.out.println("No hay peliculas alquiladas, alquila alguna pelicula.");
+					}
+				} else {
+					System.out.println("Para alquilar la pelicula, registra primero Peliculas en el videoclub.");
+				}
+				break;
 
 				case "6": //DAR DE BAJA CLIENTE
 				entrada = new Scanner(System.in);

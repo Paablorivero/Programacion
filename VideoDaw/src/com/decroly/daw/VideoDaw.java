@@ -77,13 +77,16 @@ public class VideoDaw {
     return peliculasDisponibles;
     }
 
-    public String mostrarPeliculasNoAlquiladas(){
+    public String mostrarPeliculasNoAlquiladas(VideoDaw v){
         String peliculasNoAlquiladas = "";
-
+        if(v.npeliculas > 0){
         for(int i = 0; i < npeliculas; i++){
             if (peliculas[i].isAlquilada() == false){
-                peliculasNoAlquiladas += ("N" + peliculas[i].getcodPelicula() + peliculas[i].InfoPelicula());
+                peliculasNoAlquiladas += (peliculas[i].InfoPelicula());
             }
+        }
+        }else{
+            peliculasNoAlquiladas = "No hay peliculas en el videoclub";
         }
     return peliculasNoAlquiladas;
     }
@@ -116,6 +119,7 @@ public class VideoDaw {
     public boolean devolverPelicula(int c, int p){
         this.obtenerClientePorPosicion(c);
         this.obtenerPeliculaPorPosicion(p).devolver();
+        this.obtenerPeliculaPorPosicion(p).isAlquilada();
         boolean isEliminated = false;
         return isEliminated;
     }
