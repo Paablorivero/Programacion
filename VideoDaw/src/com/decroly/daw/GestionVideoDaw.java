@@ -101,7 +101,7 @@ public class GestionVideoDaw {
 				case "3"://REGISTRAR CLIENTE
 				if (miFranquicia != null){
 					entrada = new Scanner(System.in);
-					System.out.println("\nREGISTRAR NUEVO CLIENTE");
+					System.out.println("\nREGISTRAR NUEVO CLIENTE");	
 
 				//RECOGEMOS DATOS Y REGISTRAMOS CLIENTE
 					String dni = myUtils.comprobarPatronRepetidamente(patronDNI, "\nIntroduce el DNI");
@@ -110,7 +110,8 @@ public class GestionVideoDaw {
 
 					String direccionCliente = myUtils.leerTextoPantalla("\nEscribe una direccion");
 
-					LocalDate fechaNacimiento = myUtils.leerFecha("\nEscribe la fecha de nacimiento en formato DD/MM/AAAA");
+					LocalDate fechaNacimiento = myUtils.leerFecha();
+
 					LocalDate hoy = LocalDate.now();
 					Period Años = Period.between(fechaNacimiento, hoy);
 
@@ -132,37 +133,57 @@ public class GestionVideoDaw {
 				entrada = new Scanner(System.in);
 
 				if(miFranquicia != null && nuevaPelicula != null && nuevoCliente != null){
-					System.out.println("Para alquilar primero debe identificarse");
+				//SELECCIONAR CLIENTE
+					System.out.println("Quien va a alquilar la pelicula");
+					System.out.println(miFranquicia.mostrarClientes());	 
+					int cliente = entrada.nextInt();
+				
+				//SELECCIONAR PELICULA
+					System.out.println("¿Que pelicula quieres alquilar?");
+					System.out.println(miFranquicia.mostrarPeliculasNoAlquiladas());
+					int pelicula = entrada.nextInt();
+					miFranquicia.alquilarPelicula(cliente, pelicula);
 
-				//RECOGEMOS DATOS DEL CLIENTE PARA ALQUILAR LA PELICULA
-					String dni = myUtils.comprobarPatronRepetidamente(patronDNI, "\nDime tu DNI");
-					String nombre = myUtils.leerTextoPantalla("\nEscribe un nombre");
-					String direccionCliente = myUtils.leerTextoPantalla("\nEscribe tu direccion");
-					LocalDate fechaNacimiento = myUtils.leerFecha("\nEscribe tu fecha de nacimiento en formato DD/MM/AAAA");
-					nuevoCliente = new Cliente(dni, nombre, direccionCliente, fechaNacimiento);
-				//MOSTRAMOS LAS PELICULAS DEL VIDEOCLUB
-					System.out.println("Peliculas del videoclub: ");
-					System.out.println(miFranquicia.mostrarPeliculas());
-					
+					miFranquicia.obtenerClientePorPosicion(cliente).addPelicula
+					(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
+
+					System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());	
 				}else {
 					System.out.println("Para alquilar la pelicula, registra primero Peliculas en el videoclub.");
 				}
-			
-
 					break;
 
 				case "5": //DEVOLVER PELICULA
-					
+				System.out.println("Quien va a devolver la pelicula");
+				System.out.println(miFranquicia.mostrarClientes());	 
+				int cliente = entrada.nextInt();
+
+				System.out.println("Selecciona pelicula a devolver");
+				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
+				int pelicula = entrada.nextInt();
+
+				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
+				
+				miFranquicia.obtenerClientePorPosicion(cliente).elimPelicula(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
 					break;
 
 				case "6": //DAR DE BAJA CLIENTE
-				System.out.println(miFranquicia.mostrarClientes());	 	 
-				miFranquicia.darBajaCliente(nuevoCliente);
+				entrada = new Scanner(System.in);
+				System.out.println(miFranquicia.mostrarClientes());
+
+				System.out.println("Introduce la posicion del cliente a dar de baja");
+		    	int numSocio = entrada.nextInt();
+					 	 
+				miFranquicia.darBajaCliente(nuevoCliente, numSocio);
 					break;
 
 				case "7": //DAR DE BAJA PELICULA
+				entrada = new Scanner(System.in);
+				System.out.println("Introduce la posicion de la pelicula a dar de baja");
 				System.out.println(miFranquicia.mostrarPeliculas());
-				miFranquicia.darBajaPelicula(nuevaPelicula);
+				int cod = entrada.nextInt();
+
+				miFranquicia.darBajaPelicula(nuevaPelicula, cod);
 					break;
 
 				case "8":

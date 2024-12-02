@@ -2,7 +2,6 @@ package com.decroly.daw;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class VideoDaw {
     
@@ -78,6 +77,17 @@ public class VideoDaw {
     return peliculasDisponibles;
     }
 
+    public String mostrarPeliculasNoAlquiladas(){
+        String peliculasNoAlquiladas = "";
+
+        for(int i = 0; i < npeliculas; i++){
+            if (peliculas[i].isAlquilada() == false){
+                peliculasNoAlquiladas += ("N" + peliculas[i].getcodPelicula() + peliculas[i].InfoPelicula());
+            }
+        }
+    return peliculasNoAlquiladas;
+    }
+
     public String mostrarClientes(){
         String mostrarClientes = "";
         if(clientes != null){   
@@ -88,27 +98,32 @@ public class VideoDaw {
         return mostrarClientes;
     }
 
-    public boolean alquilarPelicula(Pelicula p , Cliente c){
-        boolean isAdd = false;
-        if (p.isAlquilada() == false){
-            p.Alquiler();
-
-        }
-        else{
-            System.out.println("La pelicula seleccionada esta alquilada, por favor seleccione otra");
-        }
-        return isAdd;
+    public Pelicula obtenerPeliculaPorPosicion(int i){
+        return this.peliculas[i];
     } 
 
-    public boolean darBajaCliente(Cliente c){
-        boolean isEliminated = false;
-        Scanner entrada = new Scanner(System.in);
-        if(this.clientes != null){
-		    System.out.println("Introduce la posicion del cliente a dar de baja");
-		    int numSocio = entrada.nextInt();
+    public Cliente obtenerClientePorPosicion(int i){
+        return this.clientes[i];
+    }
 
+    public boolean alquilarPelicula(int c, int p){
+        this.obtenerClientePorPosicion(c);
+        this.obtenerPeliculaPorPosicion(p).Alquiler();
+        boolean isAdd = false;
+        return isAdd;
+    }
+
+    public boolean devolverPelicula(int c, int p){
+        this.obtenerClientePorPosicion(c);
+        this.obtenerPeliculaPorPosicion(p).devolver();
+        boolean isEliminated = false;
+        return isEliminated;
+    }
+    public boolean darBajaCliente(Cliente c, int numSocio){
+        boolean isEliminated = false;
+        if(this.clientes != null){
             this.clientes [numSocio] = null;
-            
+        
             for(int i = numSocio + 1; i < nclientes; i++){
                 this.clientes [i-1] = this.clientes[i];
             }
@@ -121,12 +136,8 @@ public class VideoDaw {
     return isEliminated;
     }
 
-    public boolean darBajaPelicula(Pelicula p){
+    public boolean darBajaPelicula(Pelicula p, int cod){
         boolean isEliminated = false;
-        Scanner entrada = new Scanner(System.in);
-
-		System.out.println("Introduce la posicion de la pelicula a dar de baja");
-		int cod = entrada.nextInt();
         if (cod >= 0 && cod < npeliculas) {
             this.peliculas [cod] = null;
             
