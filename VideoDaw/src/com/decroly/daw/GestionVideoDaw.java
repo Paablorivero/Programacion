@@ -27,7 +27,7 @@ public class GestionVideoDaw {
 		System.out.println("2.-Registrar pelicula en videoclub");
 		System.out.println("3.-Crear y registrar cliente en videoclub");
 		System.out.println("4.-Alquilar pelicula");
-		System.out.println("5.-Registrar pelicula");
+		System.out.println("5.-Devolver pelicula");
 		System.out.println("6.-Dar de baja cliente");
 		System.out.println("7.-Dar de baja pelicula");
 		System.out.println("8.-SALIR");
@@ -142,30 +142,47 @@ public class GestionVideoDaw {
 					System.out.println("¿Que pelicula quieres alquilar?");
 					System.out.println(miFranquicia.mostrarPeliculasNoAlquiladas());
 					int pelicula = entrada.nextInt();
+
+					if(miFranquicia.obtenerPeliculaPorPosicion(pelicula).isAlquilada() == false)
+					{
 					miFranquicia.alquilarPelicula(cliente, pelicula);
 
 					miFranquicia.obtenerClientePorPosicion(cliente).addPelicula
 					(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
 
 					System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());	
+					} else {
+						System.out.println("La pelicula seleccionada ya esta alquilada");
+					}
 				}else {
 					System.out.println("Para alquilar la pelicula, registra primero Peliculas en el videoclub.");
 				}
 					break;
 
 				case "5": //DEVOLVER PELICULA
-				System.out.println("Quien va a devolver la pelicula");
-				System.out.println(miFranquicia.mostrarClientes());	 
-				int cliente = entrada.nextInt();
+				if(miFranquicia != null && nuevaPelicula != null && nuevoCliente != null){
+					System.out.println("Quien va a devolver la pelicula");
+					System.out.println(miFranquicia.mostrarClientes());	 
+					int bajacliente = entrada.nextInt();
 
-				System.out.println("Selecciona pelicula a devolver");
-				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
-				int pelicula = entrada.nextInt();
+					if(miFranquicia.obtenerClientePorPosicion(bajacliente).getNalquiladas() > 0){
+						System.out.println("Selecciona pelicula a devolver");
+						System.out.println(miFranquicia.obtenerClientePorPosicion(bajacliente).mostrarPeliculas());
+						int bajapelicula = entrada.nextInt();
 
-				System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());
-				
-				miFranquicia.obtenerClientePorPosicion(cliente).elimPelicula(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
-					break;
+						miFranquicia.devolverPelicula(bajacliente, bajapelicula);
+						miFranquicia.obtenerClientePorPosicion(bajacliente).elimPelicula
+						(miFranquicia.obtenerPeliculaPorPosicion(bajapelicula));
+						
+						miFranquicia.obtenerClientePorPosicion(bajacliente).mostrarPeliculas();
+					}
+					else{
+						System.out.println("No hay peliculas alquiladas, alquila alguna pelicula.");
+					}
+				} else {
+					System.out.println("Para alquilar la pelicula, registra primero Peliculas o Cientes en el videoclub.");
+				}
+				break;
 
 				case "6": //DAR DE BAJA CLIENTE
 				entrada = new Scanner(System.in);

@@ -79,11 +79,14 @@ public class VideoDaw {
 
     public String mostrarPeliculasNoAlquiladas(){
         String peliculasNoAlquiladas = "";
-
+        if(npeliculas > 0){
         for(int i = 0; i < npeliculas; i++){
             if (peliculas[i].isAlquilada() == false){
-                peliculasNoAlquiladas += ("N" + peliculas[i].getcodPelicula() + peliculas[i].InfoPelicula());
+                peliculasNoAlquiladas += (peliculas[i].InfoPelicula());
             }
+        }
+        }else{
+            peliculasNoAlquiladas = "No hay peliculas en el videoclub";
         }
     return peliculasNoAlquiladas;
     }
