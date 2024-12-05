@@ -1,8 +1,8 @@
 package com.decroly.daw;
 import java.time.LocalDate;
 
-public class VideoDaw { 
-    //Atributos
+public class VideoDaw {
+    //ATRIBUTOS
     private String cif;
     private String direccion;
     private LocalDate alta;
@@ -12,7 +12,7 @@ public class VideoDaw {
     private Cliente [] clientes;
     private Pelicula [] peliculas;
 
-    //Contructores
+    //CONSTRUCTORES
     public VideoDaw(String cif, String direccion){
         this.cif = cif;
         this.direccion = direccion;
@@ -38,17 +38,23 @@ public class VideoDaw {
     public int getNclientes() {
         return nclientes;
     }
-    
-    public boolean nuevoCliente(Cliente nuevo){
-        boolean isAdd = false;
-        if (nuevo != null){
-            this.clientes [nclientes] = nuevo;
+
+//METODOS PARA AÑADIR DATOS
+    public boolean nuevoCliente(Cliente nuevo){//CREAR NUEVO CLIENTE
+        if (nuevo != null) {
+            for (int i = 0; i < nclientes; i++) {
+                if (clientes[i].getDni().equals(nuevo.getDni())) {
+                    return false;
+                }
+            }
+            this.clientes[nclientes] = nuevo;
             nclientes++;
+            return true;
         }
-        return isAdd;
+        return false;
     }
 
-    public boolean nuevaPelicula(Pelicula nueva){
+    public boolean nuevaPelicula(Pelicula nueva){//CREAR NUEVA PELICULA
         boolean isAdd = false;
         if (nueva != null){
             this.peliculas [npeliculas] = nueva;
@@ -57,14 +63,15 @@ public class VideoDaw {
         return isAdd;
     }
 
-    public String InfoVideoDaw(){
+//METODOS PARA MOSTRAR INFO
+    public String InfoVideoDaw(){//MOSTRAR INFO DEL VIDEOCLUB
         String getInfoVideoDaw = String.format("INFO DEL VIDEOCLUB" +
         "\nCif: %s, Direccion: %s, Fecha de alta: %s, Nº de Peliculas: %s, Nº de clientes %s", 
         this.cif, this.direccion, this.alta, this.npeliculas, this.nclientes);
         return getInfoVideoDaw;
     }
 
-    public String mostrarPeliculas(){
+    public String mostrarPeliculas(){//MOSTRAR TODAS LAS PELICULAS
      String peliculasDisponibles = "";
      for(int i = 0; i < npeliculas; i++){
         System.out.println(i + "." + peliculas[i].InfoPelicula());
@@ -72,7 +79,7 @@ public class VideoDaw {
     return peliculasDisponibles;
     }
 
-    public String mostrarPeliculasNoAlquiladas(){
+    public String mostrarPeliculasNoAlquiladas(){//MOSTRAR SOLO PELICULAS NO ALQUILADAS
         String peliculasNoAlquiladas = "";
         if(npeliculas > 0){
         for(int i = 0; i < npeliculas; i++){
@@ -86,7 +93,7 @@ public class VideoDaw {
     return peliculasNoAlquiladas;
     }
 
-    public String mostrarClientes(){
+    public String mostrarClientes(){//MOSTRAR CLIENTES 
         String mostrarClientes = "";
         if(clientes != null){   
         for(int i = 0; i < nclientes; i++){
@@ -96,33 +103,35 @@ public class VideoDaw {
         return mostrarClientes;
     }
 
-    public Pelicula obtenerPeliculaPorPosicion(int i){
+//METODOS PARA OBTENER DATOS 
+    public Pelicula obtenerPeliculaPorPosicion(int i){//OBTENER PELICULA
         return this.peliculas[i];
     } 
 
-    public Cliente obtenerClientePorPosicion(int i){
+    public Cliente obtenerClientePorPosicion(int i){//OBTENER CLIENTE
         return this.clientes[i];
     }
 
-    public boolean alquilarPelicula(int c, int p){
+//METODOS PARA MODIFICAR DATOS    
+
+    public boolean alquilarPelicula(int c, int p){//ALQUILAR PELICULA
         this.obtenerClientePorPosicion(c);
         this.obtenerPeliculaPorPosicion(p).Alquiler();
         boolean isAdd = false;
         return isAdd;
     }
 
-    public boolean devolverPelicula(int c, int p){
+    public boolean devolverPelicula(int c, int p){//DEVOLVER PELICULA
         this.obtenerClientePorPosicion(c);
         this.obtenerPeliculaPorPosicion(p).devolver();
         boolean isEliminated = false;
         return isEliminated;
     }
 
-    public boolean darBajaCliente(Cliente c, int numSocio){
+    public boolean darBajaCliente(Cliente c, int numSocio){//DAR DE BAJA CLIENTE
         boolean isEliminated = false;
         if(this.clientes != null){
             this.clientes [numSocio] = null;
-            LocalDate fechaBajaCliente = obtenerClientePorPosicion(numSocio).baja();
             for(int i = numSocio + 1; i < nclientes; i++){
                 this.clientes [i-1] = this.clientes[i];
             }
@@ -130,14 +139,12 @@ public class VideoDaw {
             nclientes--;
             isEliminated = true;
             System.out.println("Cliente eliminado");
-            obtenerClientePorPosicion(numSocio).InfoCliente();
-            System.out.println("Fecha de baja: " + fechaBajaCliente);
         }
         
     return isEliminated;
     }
 
-    public boolean darBajaPelicula(Pelicula p, int cod){
+    public boolean darBajaPelicula(Pelicula p, int cod){//DAR DE BAJA PELICULA
         boolean isEliminated = false;
         if (cod >= 0 && cod < npeliculas) {
             this.peliculas [cod] = null;

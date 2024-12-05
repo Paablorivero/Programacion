@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Cliente {
     private static int contador = 0;
 
-    //Atributos
+    //ATRIBUTOS
     private String dni;
     private String nombre;
     private int cod;
@@ -18,6 +18,7 @@ public class Cliente {
     private int nPelicula;
     private Pelicula [] peliculasCliente;
 
+    //CONSTRUCTOR
     public Cliente(String dni, String nombre, String direccion, LocalDate nacimiento){
         this.cod = this.contador;
         this.contador++;
@@ -58,14 +59,24 @@ public class Cliente {
         return nPelicula;
     }
     
-    public String InfoCliente(){
+//MOSTRAMOS DATOS
+    public String InfoCliente(){//MOSTRAMOS LA INFO DEL CLIENTE
         String getInfoCliente = String.format( 
         "\nDNI: %s, Nombre: %s, Codigo: Soc-%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
         this.dni, this.nombre, this.cod, this.direccion, this.nacimiento, this.nalquiladas );
         return getInfoCliente;
     }
 
-    public boolean addPelicula(Pelicula p){
+    public String mostrarPeliculas(){ //MOSTRAMOS PELICULAS CLIENTE
+        String peliculasAlquiladas = "";
+        for(int i = 0; i < nPelicula; i++){
+           peliculasAlquiladas += peliculasCliente[i].InfoPelicula();
+           }
+       return peliculasAlquiladas;
+    }
+
+//MODIFICAMOS DATOS
+    public boolean addPelicula(Pelicula p){//AÑADIMOS UNA PELICULA
         boolean isAdd = false;
         if (p != null){
             this.peliculasCliente[nPelicula] = p;
@@ -75,7 +86,7 @@ public class Cliente {
         return isAdd;
     }
 
-    public boolean elimPelicula(Pelicula p){
+    public boolean elimPelicula(Pelicula p){//ELIMINAMOS UNA PELICULA
         boolean isEliminated = false;
         if (p != null){
             nalquiladas--;
@@ -83,15 +94,7 @@ public class Cliente {
         return isEliminated;
     }
 
-    public String mostrarPeliculas(){
-        String peliculasAlquiladas = "";
-        for(int i = 0; i < nPelicula; i++){
-           peliculasAlquiladas += peliculasCliente[i].InfoPelicula();
-           }
-       return peliculasAlquiladas;
-       }
-
-    public LocalDate baja(){
+    public LocalDate baja(){ //AÑADIMOS FECHA DE BAJA
         LocalDate fechaBaja = LocalDate.now();
         return fechaBaja;
     }

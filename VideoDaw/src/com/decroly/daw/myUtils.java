@@ -11,18 +11,18 @@ public class myUtils {
 
     Scanner reader = new Scanner(System.in);
 
-    public static void imprimir(String mensaje){
+    public static void imprimir(String mensaje){//MOSTRAMOS UN MENSAJE EN PANTALLA
         System.out.println(mensaje);
     }
 
-    public static String leerTextoPantalla(String mensaje){
+    public static String leerTextoPantalla(String mensaje){//MOSTRAMOS MENSAJE Y LEEMOS TEXTO
         Scanner reader = new Scanner(System.in);
         System.out.println(mensaje);
         String valor = reader.nextLine();
         return valor;
     }
 
-    public static boolean comprobarPatron(String patron, String texto)
+    public static boolean comprobarPatron(String patron, String texto)//COMPROBAMOS UN PATRON 1 VEZ
     {
         boolean isOk = false;
         Pattern pat = Pattern.compile(patron); //"[0-9]{7,8}[A-Za-z]"
@@ -31,7 +31,7 @@ public class myUtils {
         return isOk;
     }
 
-    public static String comprobarPatronRepetidamente(String patron, String mensaje){
+    public static String comprobarPatronRepetidamente(String patron, String mensaje){//COMPROBAMOS UN PATRON HASTA QUE SE CUMPLA
         boolean isOk = false;
         String texto;
         do { 
@@ -44,7 +44,7 @@ public class myUtils {
         return texto;
     }
 
-    public static LocalDate leerFecha(){
+    public static LocalDate leerFecha(){//LEEMOS UNA FECHA
         Scanner entrada = new Scanner(System.in);
 
         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -56,7 +56,7 @@ public class myUtils {
         return fechaLocalDate;
     }
     
-    public static int leerNumeroPantalla(int mensaje){
+    public static int leerNumeroPantalla(int mensaje){//LEEMOS UN NUMERO
         Scanner reader = new Scanner(System.in);
         System.out.println(mensaje);
         int valor = reader.nextInt();

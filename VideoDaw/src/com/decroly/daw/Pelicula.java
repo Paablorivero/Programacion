@@ -1,16 +1,16 @@
 
 package com.decroly.daw;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class Pelicula {
     
     private static int contador = 0;
 
-    //Atributos
+    //ATRIBUTOS
     private int cod;
     private String titulo;
     private Generos genero;
@@ -20,11 +20,11 @@ public class Pelicula {
     private boolean isAlquilada;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
-    //Constructores
+
+    //CONSTRUCTORES
     public Pelicula(String titulo, Generos genero){
         this.cod = this.contador;
         this.contador++;
-
         this.titulo = titulo;
         this.genero = genero;
         this.registro = LocalDateTime.now();
@@ -54,27 +54,32 @@ public class Pelicula {
         return isAlquilada;
     }
 
-    public String InfoPelicula(){
+//METODOS PARA MOSTAR INFO
+    public String InfoPelicula(){ //MOSTRAMOS LA INFORMACION DE LA PELICULA
         String getInfoPelicula = String.format("\nCod: Pel-%s, Titulo: %s, Genero: %s, Registro: %s, alquilada: %s",
-        this.cod, this.titulo, this.genero, this.registro, this.isAlquilada);
+        this.cod, this.titulo, this.genero, this.registro.format(formatter), this.isAlquilada);
         return getInfoPelicula;
     }
     
-    public String CodPelicula(){
+    public String CodPelicula(){ //MOSTRAMOS UNICAMENTE EL Nº DE CODIGO DE LA PELICULA
         String codigoPelicula = String.format("Numero: %s", this.cod);
         return codigoPelicula;
     }
-    
-    public boolean Alquiler(){
+
+//METODOS PARA EDITAR ESTADO DE LA PELICULA
+    public boolean Alquiler(){ //ALQUILAMOS UNA PELICULA
         this.isAlquilada = true;
         this.fechaAlquiler = LocalDateTime.now();
         return isAlquilada;
     }
 
-    public boolean devolver(){
+    public boolean devolver(){//DEVOLVEMOS UNA PELICULA
         this.isAlquilada = false;
         LocalDateTime ahora = LocalDateTime.now();
-        Period dias = Period.between(this.fechaAlquiler, ahora);
+        Duration duracion = Duration.between(this.fechaAlquiler, ahora);
+        if (duracion.toHours() > 24) {
+            System.out.println("Se ha excedido el tiempo de devolucion de 48h");
+        }
         return isAlquilada;
     }
 }
