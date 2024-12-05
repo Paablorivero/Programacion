@@ -110,9 +110,14 @@ public class VideoDaw {
     }
 
     public boolean alquilarPelicula(int c, int p){
-        this.obtenerClientePorPosicion(c);
-        this.obtenerPeliculaPorPosicion(p).Alquiler();
         boolean isAdd = false;
+        if(this.obtenerPeliculaPorPosicion(p).isAlquilada() == false){
+            this.obtenerClientePorPosicion(c);
+            this.obtenerPeliculaPorPosicion(p).Alquiler();
+            isAdd = true;
+        }else if (this.obtenerPeliculaPorPosicion(p).isAlquilada() == true){
+            System.out.println("La pelicula ya esta alquilada");
+        }
         return isAdd;
     }
 
@@ -120,9 +125,11 @@ public class VideoDaw {
         this.obtenerClientePorPosicion(c);
         this.obtenerPeliculaPorPosicion(p).devolver();
         this.obtenerPeliculaPorPosicion(p).isAlquilada();
-        boolean isEliminated = false;
+        boolean isEliminated = true;
         return isEliminated;
     }
+
+    
     public boolean darBajaCliente(Cliente c, int numSocio){
         boolean isEliminated = false;
         if(this.clientes != null){

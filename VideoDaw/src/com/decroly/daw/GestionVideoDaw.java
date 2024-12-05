@@ -11,6 +11,7 @@ public class GestionVideoDaw {
 		// TODO Auto-generated method stub
 		Scanner entrada = new Scanner(System.in);
 		String opcion; //Creamos un String opcion para la seleccion del menu
+		boolean dniRegistrado = false;
 		
 		VideoDaw miFranquicia = null; //Variable para el videoclub
 		Pelicula nuevaPelicula = null; //Variable para las peliculas
@@ -19,6 +20,7 @@ public class GestionVideoDaw {
 	//PATRONES DE DATOS
 		final String patronCif = "[A-Z]{1}[0-9]{8}";
 		final String patronDNI = "[0-9]{8}[A-Z]{1}";
+
 //INICIAMOS EL MENU 
 	do{
 		entrada = new Scanner(System.in);
@@ -27,17 +29,14 @@ public class GestionVideoDaw {
 		System.out.println("2.-Registrar pelicula en videoclub");
 		System.out.println("3.-Crear y registrar cliente en videoclub");
 		System.out.println("4.-Alquilar pelicula");
-		System.out.println("5.-Registrar pelicula");
+		System.out.println("5.-Devolver pelicula");
 		System.out.println("6.-Dar de baja cliente");
 		System.out.println("7.-Dar de baja pelicula");
 		System.out.println("8.-SALIR");
 		opcion = entrada.nextLine();
-
-		//PROGRAMAMOS LAS DIFERENTES OPCIONES DEL MENU
 		
 			switch (opcion) {
 				case "1": //REGISTRAR NUEVA FRANQUICIA
-				entrada = new Scanner(System.in);
 				System.out.println("\nCREAR NUEVA FRANQUICIA");
 
 			//COMPROBAMOS EL CIF
@@ -116,6 +115,7 @@ public class GestionVideoDaw {
 					Period Años = Period.between(fechaNacimiento, hoy);
 
 					if (Años.getYears() > 18){
+						
 						nuevoCliente = new Cliente(dni, nombre, direccionCliente, fechaNacimiento);
 						miFranquicia.nuevoCliente(nuevoCliente);
 
@@ -142,12 +142,16 @@ public class GestionVideoDaw {
 					System.out.println("¿Que pelicula quieres alquilar?");
 					System.out.println(miFranquicia.mostrarPeliculasNoAlquiladas(miFranquicia));
 					int pelicula = entrada.nextInt();
-					miFranquicia.alquilarPelicula(cliente, pelicula);
 
-					miFranquicia.obtenerClientePorPosicion(cliente).addPelicula
-					(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
+				//Alquilamos pelicula y la añadimos al array del cliente
+					if(miFranquicia.alquilarPelicula(cliente, pelicula) == true){
+						miFranquicia.alquilarPelicula(cliente, pelicula);
 
-					System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());	
+						miFranquicia.obtenerClientePorPosicion(cliente).addPelicula
+						(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
+
+						System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());	
+					}
 				}else {
 					System.out.println("Para alquilar la pelicula, registra primero Peliculas en el videoclub.");
 				}
@@ -155,15 +159,25 @@ public class GestionVideoDaw {
 
 				case "5": //DEVOLVER PELICULA
 				if(miFranquicia != null && nuevaPelicula != null && nuevoCliente != null){
+
+				//Seleccionamos cliente
 					System.out.println("Quien va a devolver la pelicula");
 					System.out.println(miFranquicia.mostrarClientes());	 
 					int bajacliente = entrada.nextInt();
+
+				//Seleccionamos pelicula
 					if(miFranquicia.obtenerClientePorPosicion(bajacliente).getNalquiladas() > 0){
 						System.out.println("Selecciona pelicula a devolver");
 						System.out.println(miFranquicia.obtenerClientePorPosicion(bajacliente).mostrarPeliculas());
 						int bajapelicula = entrada.nextInt();
-						miFranquicia.obtenerClientePorPosicion(bajacliente).elimPelicula
-						(miFranquicia.obtenerPeliculaPorPosicion(bajapelicula));
+
+				//Devolvemos pelicula y la eliminamos del array cliente
+						if(miFranquicia.obtenerClientePorPosicion(bajacliente).getNalquiladas() >= bajapelicula){
+						miFranquicia.obtenerClientePorPosicion(bajacliente)
+						.elimPelicula(miFranquicia.obtenerPeliculaPorPosicion(bajapelicula));
+						}
+						else{System.out.println("El numero seleccionado no es correcto");
+						}
 					}
 					else{
 						System.out.println("No hay peliculas alquiladas, alquila alguna pelicula.");
@@ -200,9 +214,8 @@ public class GestionVideoDaw {
 					System.out.println("Seleccione una opcion valida por favor");
 					break;
 			}
+		entrada.close();
 		}
 		while(!opcion.equals("8"));
-		entrada.close();
 	}
-
 }

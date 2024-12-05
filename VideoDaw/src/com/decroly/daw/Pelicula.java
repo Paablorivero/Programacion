@@ -68,6 +68,6 @@ public class Pelicula {
 
     public boolean devolver(){
         this.isAlquilada = false;
-        return isAlquilada;
+        return isAlquilada = false;
     }
 }
