@@ -1,27 +1,22 @@
 package com.decroly.daw;
+import java.time.LocalDate;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-public class VideoDaw {
-    
+public class VideoDaw { 
     //Atributos
     private String cif;
     private String direccion;
-    private String alta;
+    private LocalDate alta;
     private int npeliculas;
     private int nclientes;
     
     private Cliente [] clientes;
     private Pelicula [] peliculas;
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
-
     //Contructores
     public VideoDaw(String cif, String direccion){
         this.cif = cif;
         this.direccion = direccion;
-        this.alta = LocalDateTime.now().format(formatter);
+        this.alta = LocalDate.now();
         this.peliculas = new Pelicula[100];
         this.npeliculas = 0;
         this.clientes = new Cliente[100];
@@ -34,7 +29,7 @@ public class VideoDaw {
     public String getDireccion() {
         return direccion;
     }
-    public String getAlta() {
+    public LocalDate getAlta() {
         return alta;
     }
     public int getNpeliculas() {
@@ -77,9 +72,9 @@ public class VideoDaw {
     return peliculasDisponibles;
     }
 
-    public String mostrarPeliculasNoAlquiladas(VideoDaw v){
+    public String mostrarPeliculasNoAlquiladas(){
         String peliculasNoAlquiladas = "";
-        if(v.npeliculas > 0){
+        if(npeliculas > 0){
         for(int i = 0; i < npeliculas; i++){
             if (peliculas[i].isAlquilada() == false){
                 peliculasNoAlquiladas += (peliculas[i].InfoPelicula());
@@ -110,31 +105,24 @@ public class VideoDaw {
     }
 
     public boolean alquilarPelicula(int c, int p){
+        this.obtenerClientePorPosicion(c);
+        this.obtenerPeliculaPorPosicion(p).Alquiler();
         boolean isAdd = false;
-        if(this.obtenerPeliculaPorPosicion(p).isAlquilada() == false){
-            this.obtenerClientePorPosicion(c);
-            this.obtenerPeliculaPorPosicion(p).Alquiler();
-            isAdd = true;
-        }else if (this.obtenerPeliculaPorPosicion(p).isAlquilada() == true){
-            System.out.println("La pelicula ya esta alquilada");
-        }
         return isAdd;
     }
 
     public boolean devolverPelicula(int c, int p){
         this.obtenerClientePorPosicion(c);
         this.obtenerPeliculaPorPosicion(p).devolver();
-        this.obtenerPeliculaPorPosicion(p).isAlquilada();
-        boolean isEliminated = true;
+        boolean isEliminated = false;
         return isEliminated;
     }
 
-    
     public boolean darBajaCliente(Cliente c, int numSocio){
         boolean isEliminated = false;
         if(this.clientes != null){
             this.clientes [numSocio] = null;
-        
+            LocalDate fechaBajaCliente = obtenerClientePorPosicion(numSocio).baja();
             for(int i = numSocio + 1; i < nclientes; i++){
                 this.clientes [i-1] = this.clientes[i];
             }
@@ -142,6 +130,8 @@ public class VideoDaw {
             nclientes--;
             isEliminated = true;
             System.out.println("Cliente eliminado");
+            obtenerClientePorPosicion(numSocio).InfoCliente();
+            System.out.println("Fecha de baja: " + fechaBajaCliente);
         }
         
     return isEliminated;

@@ -1,6 +1,9 @@
+
 package com.decroly.daw;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class Pelicula {
@@ -12,8 +15,8 @@ public class Pelicula {
     private String titulo;
     private Generos genero;
     private LocalDateTime registro;
-    private String fechaBaja;
-    private String fechaAlquiler;
+    private LocalDate fechaBaja;
+    private LocalDateTime fechaAlquiler;
     private boolean isAlquilada;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:SS");
@@ -26,6 +29,7 @@ public class Pelicula {
         this.genero = genero;
         this.registro = LocalDateTime.now();
         this.isAlquilada = false;
+        this.fechaAlquiler = fechaAlquiler;
     }
 
     public int getcodPelicula() {
@@ -40,10 +44,10 @@ public class Pelicula {
     public LocalDateTime getfechaRegistro() {
         return registro;
     }
-    public String getfechaBaja() {
+    public LocalDate getfechaBaja() {
         return fechaBaja;
     }
-    public String getfechaAlquiler() {
+    public LocalDateTime getfechaAlquiler() {
         return fechaAlquiler;
     }
     public boolean isAlquilada() {
@@ -51,8 +55,8 @@ public class Pelicula {
     }
 
     public String InfoPelicula(){
-        String getInfoPelicula = String.format("\nCod: Pel-%s, Titulo: %s, Genero: %s, Registro: %s", 
-        this.cod, this.titulo, this.genero, this.registro);
+        String getInfoPelicula = String.format("\nCod: Pel-%s, Titulo: %s, Genero: %s, Registro: %s, alquilada: %s",
+        this.cod, this.titulo, this.genero, this.registro, this.isAlquilada);
         return getInfoPelicula;
     }
     
@@ -63,11 +67,14 @@ public class Pelicula {
     
     public boolean Alquiler(){
         this.isAlquilada = true;
+        this.fechaAlquiler = LocalDateTime.now();
         return isAlquilada;
     }
 
     public boolean devolver(){
         this.isAlquilada = false;
-        return isAlquilada = false;
+        LocalDateTime ahora = LocalDateTime.now();
+        Period dias = Period.between(this.fechaAlquiler, ahora);
+        return isAlquilada;
     }
 }
