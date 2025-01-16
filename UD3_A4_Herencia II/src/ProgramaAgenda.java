@@ -40,8 +40,6 @@ public class ProgramaAgenda {
                 System.out.println("Introduce el nombre del contacto que deseas eliminar");
                 String nombreEliminar = entrada.nextLine();
 
-                agenda.elimContacto(nombreEliminar);
-
                 if (agenda.elimContacto(nombreEliminar) == true){
                     System.out.println("Contacto eliminado correctamente");
                 } else if(agenda.elimContacto(nombreEliminar) == false){
@@ -67,7 +65,14 @@ public class ProgramaAgenda {
                 break;
 
             case "5":
+                System.out.println("Introduce el nombre del contacto a buscar");
+                String nombreBuscar = entrada.nextLine();
 
+                if (agenda.buscarContacto(nombreBuscar) != -1){
+                    System.out.println("El contacto se encuentra en la posición " + agenda.buscarContacto(nombreBuscar));
+                } else {
+                    System.out.println("El contacto no existe");
+                }
                 break;
 
             case "6":

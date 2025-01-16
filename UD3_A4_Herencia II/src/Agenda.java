@@ -26,7 +26,7 @@ public class Agenda {
           if (contactos[i].getNombre().equalsIgnoreCase(nombre)){
                 contactos[i] = null;
                 numContactos--;
-                if (i >= 1){
+                if (i > 0){
                     contactos[i - 1] = contactos[i];
                 }
                 return true;
@@ -52,7 +52,7 @@ public class Agenda {
         
       if (this.contactos != null){
         for (int i = 0; i < numContactos; i++){
-            System.out.println((i+1) + contactos[i].infoContacto());
+            System.out.println((i+1) + ".- " +  contactos[i].infoContacto());
         }
       }
     }
