@@ -21,18 +21,51 @@ public class ProgramaAgenda {
 
         switch (opcion) {
             case "1":
-                System.out.println("Introduce el nombre del contacto");
-                String nombre = entrada.nextLine();
+                System.out.println("Introduce el tipode contacto (1. Persona, 2. Empresa)");
+                String tipoContacto = entrada.nextLine();
 
-                System.out.println("Introduce el numero de telefono del contacto");
-                int telefono = entrada.nextInt();
+                switch (tipoContacto) {
+                    case "1":
+                    System.out.println("Introduce el nombre del contacto");
+                    String nombre = entrada.nextLine();
 
-                Contacto c = new Contacto(nombre, telefono);
+                    System.out.println("Introduce el telefono del contacto");
+                    int telefono = entrada.nextInt();
 
-                if (agenda.addContacto(c) == true){
-                    System.out.println("Contacto añadido correctamente");
-                } else {
-                    System.out.println("No se ha podido añadir el contacto, intentelo otra vez o comprueba si ya existe");
+                    System.out.println("Introduce la fecha de cumpleaños del contacto");
+                    String cumple = entrada.nextLine();
+
+                    ContactoPersona contactoPersona = new ContactoPersona(nombre, telefono, cumple);
+
+                    if (agenda.addPersona(contactoPersona) == true){
+                        System.out.println("Contacto añadido correctamente");
+                    } else {
+                        System.out.println("No se ha podido añadir el contacto, comprueba si existe");
+                    }
+                        break;
+
+                    case "2":
+                    System.out.println("Introduce el nombre de la empresa");
+                    String nombreEmpresa = entrada.nextLine();
+
+                    System.out.println("Introduce el telefono de la empresa");
+                    int telefonoEmpresa = entrada.nextInt();
+
+                    System.out.println("Introduce la web de la empresa");
+                    String webEmpresa = entrada.nextLine();
+
+                    ContactoEmpresa contactoEmpresa = new ContactoEmpresa(nombreEmpresa, telefonoEmpresa, webEmpresa);
+
+                    if (agenda.addEmpresa(contactoEmpresa) == true){
+                        System.out.println("Contacto añadido correctamente");
+                    } else {
+                        System.out.println("No se ha podido añadir el contacto, comprueba si existe");
+                    }
+                        break;
+                        
+                    default:
+                        System.out.println("Opción no válida, seleccione otra opcion por favor");
+                        break;
                 }
                 break;
 
@@ -82,9 +115,10 @@ public class ProgramaAgenda {
             default:
                 System.out.println("Opción no válida, seleccione otra opcion por favor");
                 break;
-        }
-
-
-    } while (!opcion.equals("6"));
+            }
+        } while (!opcion.equals("6"));
     }
 }
+
+
+

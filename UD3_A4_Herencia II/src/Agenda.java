@@ -2,9 +2,24 @@ public class Agenda {
 
     private Contacto[] contactos = new Contacto[100];
     private int numContactos;
+    
 
+    public boolean addPersona (ContactoPersona c){
+        boolean isAdd = false;
+        if (numContactos < contactos.length){
+            for (int i = 0; i < numContactos; i++){
+                if (contactos[i].getNombre().equalsIgnoreCase(c.getNombre())){   
+                    return false; 
+                }              
+            }
+        contactos[numContactos] = c;
+        numContactos++;
+        isAdd = true;
+        }
+        return isAdd;
+    }
 
-    public boolean addContacto (Contacto c){
+    public boolean addEmpresa (ContactoEmpresa c){
         boolean isAdd = false;
         if (numContactos < contactos.length){
             for (int i = 0; i < numContactos; i++){

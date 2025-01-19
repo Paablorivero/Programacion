@@ -16,6 +16,8 @@ public class ContactoPersona extends Contacto {
         String infoContacto = String.format("Nombre: %s, Telefono: %d, Cumpleaños: %s", nombre, telefono, cumple);
         return infoContacto;
     }
+    
+    
 
     
    
