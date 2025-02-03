@@ -25,16 +25,15 @@ public class App {
                     System.out.println("Introduce el color del coche");
                     String color = entrada.nextLine();
 
-                    Coche coche = new Coche(color, marca);
-
                     System.out.println("Introduce la matricula del coche");
                     String matricula = entrada.nextLine();
 
-                    if(taller.addElemento(taller, matricula, coche)==true){
+                    if(taller.addElemento(taller, matricula, marca, color)==true){
                         System.out.println("Coche añadido correctamente");
-                       System.out.println(taller.mostrarCoches()); 
+                        System.out.println(taller.mostrarCoches());
+                        System.out.println("Matriculas: "); 
                         System.out.println(taller.mostrarMatricula());
-                        System.out.println(taller.listaTaller());
+                        System.out.println(taller.visualizarTaller());
                     }else{
                         System.out.println("No se ha podido añadir el coche");
                     }

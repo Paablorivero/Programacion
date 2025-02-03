@@ -3,12 +3,11 @@ import java.util.Map;
 
 public class Taller {
     
-    private Map<String, Coche> coches = new HashMap<String, Coche>();
+    private HashMap<String, Coche> coches = new HashMap<String, Coche>();
 
-
-    public boolean addElemento(Taller t, String matricula, Coche coche){
+    public boolean addElemento(Taller t, String matricula, String marca, String color){
         if(!t.coches.containsKey(matricula)){
-            coches.put(matricula, coche);
+            coches.put(matricula, new Coche(color, marca));
             return true;
         }else{
             return false;
@@ -34,13 +33,18 @@ public class Taller {
 
     public String mostrarMatricula(){
         String listaMatriculas = "";
-        for (Map.Entry<String, Coche> entry : coches.entrySet()) {
-            listaMatriculas += "Matricula: " + entry.getKey() + "\n";
+        for (String matricula : coches.keySet()) {
+            listaMatriculas += matricula + ",";
         }
         return listaMatriculas;
     }
 
-    public Map<String, Coche> listaTaller(){
-        return coches;
+
+    public String visualizarTaller(){
+        String listaTaller = "";
+        for(Map.Entry<String, Coche> entry : coches.entrySet()){
+            listaTaller += "Matricula: " + entry.getKey() + " " + entry.getValue() + "\n";
+        }
+        return listaTaller;
     }
 }//Cierre CLASE

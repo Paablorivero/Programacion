@@ -24,7 +24,8 @@ public class Coche{
         return marca;
     }
 
-    public void mostrarDatos(){
-        System.out.println("El coche de marca " + marca + " y color " + color);
+    @Override
+    public String toString(){
+        return "Coche (Color: " + color + " Marca: " + marca + ")\n";
     }
 }
