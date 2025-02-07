@@ -43,5 +43,33 @@ public class App {
 
         //EJERCICIO 3
         
+        System.out.println("EJERCICIO 3");
+
+        Double numeros [] = new Double[5];
+        int pos = 0;
+
+        if(pos == 0){
+            try{
+                System.out.println("Se van a pedir 5 numeros para guardar");
+                for(int i = 0; i < numeros.length; i++){
+                    System.out.println("Introduce un numero en formato 0,0");
+                    numeros[i] = entrada.nextDouble();
+                    pos++;
+                }
+            }catch(NumberFormatException e){
+                System.out.println("Dato invalido. Intentalo de nuevo");
+            }catch (Exception e) {
+                System.out.println("Error inesperado: " + e.getMessage());
+            }
+        }
+
+        if(numeros[4] != null){
+            System.out.println("\nValores introducidos en el vector:");
+            for (int i = 0; i < numeros.length; i++){
+                System.out.println("Numero " + i + ": " + numeros[i]);
+            }
+        }else{
+            pos = 0;
+        }
     }
 }
