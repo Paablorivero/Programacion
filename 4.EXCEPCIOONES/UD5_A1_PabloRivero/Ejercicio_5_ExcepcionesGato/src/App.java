@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         
         Scanner entrada = new Scanner(System.in);
         
@@ -15,8 +15,6 @@ public class App {
 
         try {
             Gato gato = new Gato(nombre, edad);
-            gato.setNombre(nombre);
-            gato.setEdad(edad);
             System.out.println(gato.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());

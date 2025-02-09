@@ -1,5 +1,4 @@
 public class Gato {
-    
     private String nombre;
     private int edad;
   
@@ -33,5 +32,4 @@ public class Gato {
     public String toString(){
         return "El gato se llama: " + nombre + " y tiene " + edad + " años.";
     }
-    
 }
