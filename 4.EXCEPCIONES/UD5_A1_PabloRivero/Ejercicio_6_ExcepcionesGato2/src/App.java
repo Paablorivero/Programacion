@@ -12,11 +12,13 @@ public class App {
                 System.out.println("Dime el nombre (minimo 3 caracteres)");
                 String nombre = entrada.nextLine();
 
+                entrada = new Scanner(System.in);
                 System.out.println("Dime la edad (mayor que 0)");
-                int edad = Integer.parseInt(entrada.nextLine()); // Evitamos el problema con nextInt()
+                String edadString = entrada.nextLine();
+                int edad = Integer.parseInt(edadString); //El scaner da error y solo se soluciona con el interger
 
                 Gato gato = new Gato(nombre, edad);
-                // No necesitamos los setters aquí ya que el constructor ya valida y establece los valores
+                
                 System.out.println(gato.toString());
                 gatos.add(gato);
                 contGatos++;
