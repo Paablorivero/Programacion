@@ -1,36 +1,52 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class CuentaBancaria {
-    //Atributos
+    //ATRIBUTOS
+    private Cliente cliente;
     private String iban;
-    private String titular;
     private double saldo;
+    
+    private ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+    Iterator<Movimiento> itera = movimientos.iterator();
+    Movimiento cadaMovimiento;
 
-    private Movimiento [] movimientos;
-    private int nMovimientos;
-
-    public CuentaBancaria(String iban, String titular, double saldo){
+   //CONSTRUCTOR
+    public CuentaBancaria(Cliente cliente, String iban, double saldo) {
+        this.cliente = cliente;
         this.iban = iban;
-        this.titular = titular;
         this.saldo = saldo;
-        this.movimientos = new Movimiento[100];
-        this.nMovimientos = 0;
     }
 
-    public String iban(){
-        return this.iban;
+    //GETTERS Y SETTERS
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public String titular(){
-        return this.titular;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public double saldo(){
-        return this.saldo;
+    public String getIban() {
+        return iban;
     }
 
-    public String infoCuenta(){
-        String info = String.format("TU CUENTA ES: " + "\nIBAN - %s \nTITULAR DE LA CUENTA: %s \nTU SALDO: %s", 
-        this.iban, this.titular, this.saldo);
-        return info;
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    //INFO ATRIBUTOS Y CUENTA   
+    @Override
+    public String toString() {
+        return "CuentaBancaria [cliente=" + cliente + ", iban=" + iban + ", saldo=" + saldo + "]";
     }
 
     public String infoIban(){
@@ -38,21 +54,16 @@ public class CuentaBancaria {
         return getIban;
     }
 
-    public String infoTitular(){
-        String getTitular = String.format("\nNOMBRE DEL TITULAR: " + this.titular);
-        return getTitular;
-    }
-
     public String infoSaldo(){
         String getSaldo = String.format("\nSALDO ACTUAL: " + this.saldo);
         return getSaldo;
     }
 
+    //METODOS MOVIMIENTOS
     public boolean nuevoIngreso (Movimiento ing){
         boolean isAdd = false;
         if (ing != null){
-            this.movimientos [nMovimientos] = ing;
-            this.nMovimientos++;
+            movimientos.add(ing);
             saldo = ing.getCantidad() + saldo;
             isAdd = true;
         } 
@@ -71,8 +82,7 @@ public class CuentaBancaria {
                 if (saldo > -50 && saldo < 0) {
                 System.out.println("EL SALDO ACTUAL ES NEGATIVO." + "\nSALDO ACTUAL: " + this.saldo);   
                 }
-                this.movimientos [nMovimientos] = ret;
-                this.nMovimientos++;
+                movimientos.add(ret);
                 isAdd = true;
             }
         }
@@ -80,10 +90,11 @@ public class CuentaBancaria {
     }
 
     public String infoMovimiento (){
-        String infoMovimientos = "";
-        for(int i = 0; i < nMovimientos; i++){
-            infoMovimientos += movimientos [i].getInfo();
+        String InfoMovimiento = "";
+        while(itera.hasNext()){
+            cadaMovimiento = itera.next();
+            InfoMovimiento = cadaMovimiento.toString();
         }
-        return infoMovimientos;
+        return InfoMovimiento;
     }
 }

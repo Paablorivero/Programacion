@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.LocalDate;
 
 public class DawBank {
 
@@ -9,22 +10,27 @@ public class DawBank {
 		Scanner entrada = new Scanner(System.in);
 		CuentaBancaria miCuenta;
 
-		//CREAMOS UNA NUEVA CUENTA BANCARIA
-		System.out.println("Bienvenido a DawBank" + "\nPara empezar vamos a crear la cuenta");
-		System.out.println("Introduce tu nombre completo (Nombre + Apellidos)");
+		//PATTERNS
+		final String patiban = "[A-Z]{2}[0-9]{22}";
+		final String patDNI = "[0-9]{8}[A-Z]{1}";
+
+		//CREAMOS UNA PERSONA
+		System.out.println("Introduzca el nombre");
 		String nombre = entrada.nextLine();
 
-		//VALIDAREMOS EL IBAN
-		System.out.println("Introduce tu IBAN");
-		String iban = entrada.nextLine();
-		Pattern patiban = Pattern.compile("[A-Z]{2}[0-9]{22}");
-		Matcher matiban = patiban.matcher(iban);
-		while (!matiban.matches()) {
-			System.out.println("El IBAN introducido es incorrecto" + "\nIntroduce un IBAN correcto");
-			iban = entrada.nextLine();
-			matiban = patiban.matcher(iban);
-		}
+		System.out.println("Ahora dime tu DNI");
+		String dni = myUtils.comprobarPatronRepetidamente(patDNI, "Intruduce el DNI");
 
+		System.out.println("Introduzca la fecha de nacimiento");
+		LocalDate nacimiento = myUtils.leerFecha();
+
+		Persona persona = new Persona(nombre, dni, nacimiento);
+
+		
+		
+
+		//VALIDAREMOS EL IBAN
+		String iban = myUtils.comprobarPatronRepetidamente(patiban, "Introduce tu IBAN");
 		miCuenta = new CuentaBancaria(iban, nombre, 0);
 		System.out.println("Cuenta creada correctamente");
 
@@ -48,7 +54,7 @@ public class DawBank {
 		
 			switch (opcion) {
 				case "1":
-					System.out.println(miCuenta.infoCuenta());
+					System.out.println(miCuenta.toString());
 					break;
 
 				case "2":

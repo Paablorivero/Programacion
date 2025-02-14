@@ -39,10 +39,11 @@ public class Movimiento {
         return this.cantidad;
     }
 
-    public String getInfo(){
-        String getMovimiento = String.format("ID: %s, FECHA: %s, TIPO DE OPERACION: %s, CANTIDAD INGRESADA: %s EUROS \n",
-         this.id, this.fecha, this.tipo, this.cantidad );
-        return getMovimiento;
+    @Override
+    public String toString() {
+        return "Movimiento [id=" + id + ", fecha=" + fecha + ", tipo=" + tipo + ", cantidad=" + cantidad + "]";
     }
+
+
 }
 
