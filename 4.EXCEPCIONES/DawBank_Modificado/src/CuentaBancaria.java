@@ -2,20 +2,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CuentaBancaria {
-    //ATRIBUTOS
+    //Atributos
     private Cliente cliente;
     private String iban;
     private double saldo;
-    
+
     private ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
     Iterator<Movimiento> itera = movimientos.iterator();
     Movimiento cadaMovimiento;
 
-   //CONSTRUCTOR
+    //CONSTRUCTOR
     public CuentaBancaria(Cliente cliente, String iban, double saldo) {
         this.cliente = cliente;
         this.iban = iban;
         this.saldo = saldo;
+        this.movimientos = new ArrayList<>();
     }
 
     //GETTERS Y SETTERS
@@ -43,7 +44,7 @@ public class CuentaBancaria {
         this.saldo = saldo;
     }
 
-    //INFO ATRIBUTOS Y CUENTA   
+    //INFO ATRIBUTOS Y CUENTA 
     @Override
     public String toString() {
         return "CuentaBancaria [cliente=" + cliente + ", iban=" + iban + ", saldo=" + saldo + "]";
@@ -59,34 +60,56 @@ public class CuentaBancaria {
         return getSaldo;
     }
 
-    //METODOS MOVIMIENTOS
-    public boolean nuevoIngreso (Movimiento ing){
-        boolean isAdd = false;
-        if (ing != null){
-            movimientos.add(ing);
-            saldo = ing.getCantidad() + saldo;
-            isAdd = true;
-        } 
-        return isAdd;
+    public String infoCliente(){
+        String getCliente = String.format("\nDATOS DEL CLIENTE: " + this.cliente);
+        return getCliente;
     }
 
-    public boolean nuevoRetirada (Movimiento ret){
-        boolean isAdd = false;
-        if (ret != null){
-            if ((saldo - ret.getCantidad()) < -50) {
-                System.out.println("SALDO INSUFICIENTE, POR FAVOR REALIZA OTRA RETIRADA O INGRESE DINERO" +
-                "\nSALDO ACTUAL: " + this.saldo);
-            }
-            else if((saldo - ret.getCantidad()) >-50){
-                saldo = saldo - ret.getCantidad();
-                if (saldo > -50 && saldo < 0) {
-                System.out.println("EL SALDO ACTUAL ES NEGATIVO." + "\nSALDO ACTUAL: " + this.saldo);   
-                }
-                movimientos.add(ret);
-                isAdd = true;
-            }
+    public boolean nuevoIngreso (Movimiento ing) throws CuentaExcepcion, AvisarHaciendaExcepcion{
+        if (ing == null) {
+            throw new CuentaExcepcion("El movimiento no puede ser nulo");
         }
-        return isAdd;
+        if(ing.getCantidad() <= 0){
+            throw new CuentaExcepcion("NO SE PUEDE INGRESAR UNA CANTIDAD NEGATIVA O IGUAL A 0");
+        }
+        movimientos.add(ing);
+        saldo += ing.getCantidad();
+
+        if (ing.getCantidad() > 3000){
+            throw new AvisarHaciendaExcepcion("ES NECESARIO NOTIFICAR A HACIENDA",
+            this.cliente.getNombre(),
+            this.iban,
+            ing);//Lanzamos el aviso a hacienda
+        }
+            
+        
+        return true;
+    }
+
+    public boolean nuevoRetirada (Movimiento ret) throws CuentaExcepcion, AvisarHaciendaExcepcion{
+        if (ret == null) {
+            throw new CuentaExcepcion("El movimiento no puede ser nulo");
+        }
+        if (ret.getCantidad() <= 0) {
+            throw new CuentaExcepcion("NO SE PUEDE RETIRAR UNA CANTIDAD NEGATIVA O IGUAL A 0");
+        }
+        if ((saldo - ret.getCantidad()) < -50) {
+            throw new CuentaExcepcion("SALDO INSUFICIENTE, POR FAVOR REALIZA OTRA RETIRADA O INGRESE DINERO");
+        }
+
+        saldo -= ret.getCantidad();
+        movimientos.add(ret);
+        if (saldo > -50 && saldo < 0) {
+            throw new CuentaExcepcion("EL SALDO ACTUAL ES NEGATIVO." + "\nSALDO ACTUAL: " + this.saldo);   
+        }
+        if (ret.getCantidad() > 3000){
+            throw new AvisarHaciendaExcepcion("ES NECESARIO NOTIFICAR A HACIENDA",
+            this.cliente.getNombre(),
+            this.iban,
+            ret);//Lanzamos el aviso a hacienda
+        }
+        
+        return true;
     }
 
     public String infoMovimiento (){

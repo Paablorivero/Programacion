@@ -52,7 +52,7 @@ public class myUtils {
         return fechaLocalDate;
     }
     
-    public static int leerNumeroPantalla(int mensaje){//LEEMOS UN NUMERO
+    public static int leerNumeroPantalla(String mensaje){//LEEMOS UN NUMERO
         Scanner reader = new Scanner(System.in);
         System.out.println(mensaje);
         int valor = reader.nextInt();

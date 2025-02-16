@@ -1,7 +1,5 @@
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class DawBank {
 
@@ -14,32 +12,31 @@ public class DawBank {
 		final String patiban = "[A-Z]{2}[0-9]{22}";
 		final String patDNI = "[0-9]{8}[A-Z]{1}";
 
-		//CREAMOS UNA PERSONA
-		System.out.println("Introduzca el nombre");
-		String nombre = entrada.nextLine();
+	try{
+		//CREAMOS UN CLIENTE
+		String nombre = myUtils.leerTextoPantalla("Introduce tu nombre:");
+		String dni = myUtils.comprobarPatronRepetidamente(patDNI, "Introduce tu DNI:");
+		int telefono = myUtils.leerNumeroPantalla("Introduce tu telefono:");
+		String email = myUtils.leerTextoPantalla("Introduce tu email:");
+		String direccion = myUtils.leerTextoPantalla("Introduce tu direccion:");
 
-		System.out.println("Ahora dime tu DNI");
-		String dni = myUtils.comprobarPatronRepetidamente(patDNI, "Intruduce el DNI");
-
-		System.out.println("Introduzca la fecha de nacimiento");
+		System.out.print("Introduzca la fecha de nacimiento");
 		LocalDate nacimiento = myUtils.leerFecha();
 
-		Persona persona = new Persona(nombre, dni, nacimiento);
-
+		Cliente cliente = new Cliente(nombre, dni, nacimiento, telefono, email, direccion);
+		System.out.println("Cliente creado correctamente");
 		
-		
-
-		//VALIDAREMOS EL IBAN
+		//Creamos una cuenta bancaria
 		String iban = myUtils.comprobarPatronRepetidamente(patiban, "Introduce tu IBAN");
-		miCuenta = new CuentaBancaria(iban, nombre, 0);
+		miCuenta = new CuentaBancaria(cliente, iban, 0);
 		System.out.println("Cuenta creada correctamente");
+	
 
 		//CREAMOS UN MENU PARA LAS DIFERENTES OPCIONES
-		
 		String opcion;
 	do{
 		entrada = new Scanner(System.in);
-		System.out.println("\nBienvenido " + nombre + " ¿Que deseas hacer?");
+		System.out.println("\nBienvenido, ¿Que deseas hacer?");
 		System.out.println("1.-Datos de la cuenta");
 		System.out.println("2.-IBAN");
 		System.out.println("3.-TITULAR");
@@ -62,7 +59,7 @@ public class DawBank {
 					break;
 
 				case "3":
-				System.out.println(miCuenta.infoTitular());
+				System.out.println(miCuenta.infoCliente());
 					break;
 
 				case "4":
@@ -70,41 +67,38 @@ public class DawBank {
 					break;
 
 				case "5":
-					entrada = new Scanner(System.in);
+					try{
 					System.out.println("INGRESAR SALDO" + "\nINTRODUCE LA CANTIDAD QUE VAS A INGRESAR");
 					double cantidadingreso = entrada.nextDouble();
 
-					if(cantidadingreso > 0){
-						if (cantidadingreso > 3000) {
-							System.out.println("VA A REALIZAR UNA OPERACION DE MAS DE 3000 EUROS." 
-							+ "\nNOTIFIQUE A HACIENDA POR FAVOR");
-						}
-						Movimiento ingreso = new Movimiento("Ingreso",cantidadingreso);
-						miCuenta.nuevoIngreso(ingreso);
-						System.out.println("INGRESO REALIZADO CON EXITO" + "\n" + miCuenta.infoSaldo());
+					Movimiento ingreso = new Movimiento("Ingreso",cantidadingreso);
+					miCuenta.nuevoIngreso(ingreso);
+					System.out.println("INGRESO REALIZADO CON EXITO" + "\n" + miCuenta.infoSaldo());
 					}
-
-					else {
-						System.out.println("POR FAVOR, INTRODUCE UNA CANTIDAD VALIDA");
+					catch (CuentaExcepcion e){
+						System.out.println(e.getMessage());
+					}
+					catch (AvisarHaciendaExcepcion e){
+						System.out.println(e.getMessage());
+						System.out.println("INGRESO REALIZADO CON EXITO" + "\n" + miCuenta.infoSaldo());
 					}
 					break;
 
 				case "6":
-					entrada = new Scanner(System.in);
+					try{
 					System.out.println("RETIRAR SALDO" + "\nINTRODUCE LA CANTIDAD QUE VAS A RETIRAR");
 					double cantidadretirada = entrada.nextDouble();
 
-					if (cantidadretirada > 0) {
-						if (cantidadretirada > 3000) {
-							System.out.println("VA A REALIZAR UNA OPERACION DE MAS DE 3000 EUROS." 
-							+ "\nNOTIFIQUE A HACIENDA POR FAVOR");
-						}
-						Movimiento retirada = new Movimiento("Retirada",cantidadretirada);
-						miCuenta.nuevoRetirada(retirada);
-						System.out.println("RETIRADA REALIZADA CON EXITO" + "\n" + miCuenta.infoSaldo());
+					Movimiento retirada = new Movimiento("Retirada",cantidadretirada);
+					miCuenta.nuevoRetirada(retirada);
+					System.out.println("RETIRADA REALIZADA CON EXITO" + "\n" + miCuenta.infoSaldo());
 					}
-					else{
-						System.out.println("POR FAVOR, INTRODUCE UNA CANTIDAD VALIDA");
+					catch (CuentaExcepcion e){
+						System.out.println(e.getMessage());
+					}
+					catch (AvisarHaciendaExcepcion e){
+						System.out.println(e.getMessage());
+						System.out.println("RETIRADA REALIZADO CON EXITO" + "\n" + miCuenta.infoSaldo());
 					}
 					break;
 
@@ -122,7 +116,11 @@ public class DawBank {
 			}
 		}
 		while(!opcion.equals("8"));
+	}catch (Exception e){
+		System.out.println("Error inesperado. Saliendo de DawBank");
+	}finally{
 		entrada.close();
+	}
 	}//Public static
 
 }//Main

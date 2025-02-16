@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Cliente extends Persona {
     
@@ -6,7 +6,7 @@ public class Cliente extends Persona {
     private String email;
     private String direccion;
     
-    public Cliente(String nombre, String dni, Date fechaNacimiento, int telefono, String email, String direccion) {
+    public Cliente(String nombre, String dni, LocalDate fechaNacimiento, int telefono, String email, String direccion) {
         super(nombre, dni, fechaNacimiento);
         this.telefono = telefono;
         this.email = email;
@@ -36,6 +36,4 @@ public class Cliente extends Persona {
     public String toString() {
         return "Cliente [telefono=" + telefono + ", email=" + email + ", direccion=" + direccion + "]";
     }
-
-    
 }
