@@ -1,14 +1,15 @@
 import java.time.LocalDateTime;
 
-public class Videojuego {
+public class Videojuego extends Articulo{
     private GenerosVideojuego genero;
     private LocalDateTime fechaAlquiler;
     private boolean isAlquilado;
     
-    public Videojuego(GenerosVideojuego genero, LocalDateTime fechaAlquiler, boolean isAlquilado) {
+    public Videojuego(String titulo, GenerosVideojuego genero) {
+        super(titulo);
         this.genero = genero;
-        this.fechaAlquiler = fechaAlquiler;
-        this.isAlquilado = isAlquilado;
+        this.fechaAlquiler = null;
+        this.isAlquilado = false;
     }
 
     public GenerosVideojuego getGenero() {
@@ -37,7 +38,7 @@ public class Videojuego {
 
     @Override
     public String toString() {
-        return "Videojuego [genero=" + genero + ", fechaAlquiler=" + fechaAlquiler + ", isAlquilado=" 
-        + isAlquilado + "]";
+        return "Videojuego [genero=" + this.genero + ", fechaAlquiler=" + this.fechaAlquiler + ", isAlquilado=" 
+        + this.isAlquilado + "]";
     }
 }

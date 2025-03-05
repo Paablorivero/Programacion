@@ -1,89 +1,90 @@
 import java.time.LocalDate;
 
-public class Cliente {
+public class Cliente extends Persona{
     private static int contador = 0;
 
     //ATRIBUTOS
-    private String dni;
-    private String nombre;
     private int cod;
-    private String direccion;
-    private LocalDate nacimiento;
     private LocalDate fechaBaja;
     private int nalquiladas;
-
-    private int nPelicula;
-    private Pelicula [] peliculasCliente;
+    private int nArticulos;
+    private Articulo [] articulosCliente;
 
     //CONSTRUCTOR
-    public Cliente(String dni, String nombre, String direccion, LocalDate nacimiento){
-        this.cod = this.contador;
-        this.contador++;
-
-        this.dni = dni;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.nacimiento = nacimiento;
-        this.nalquiladas = 0;
-        this.peliculasCliente = new Pelicula[100];
-        this.nPelicula = 0;
+    
+    public Cliente(String dni, String nombre, String direccion, LocalDate nacimiento) {
+        super(dni, nombre, direccion, nacimiento);
+        this.cod = contador;
+        contador++;
+        
         this.fechaBaja = fechaBaja;
+        this.nalquiladas = nalquiladas;
+        this.nArticulos = nArticulos;
     }
     
-    public String getDni() {
-        return dni;
+    public static int getContador() {
+        return contador;
     }
-    public String getNombre() {
-        return nombre;
+    public static void setContador(int contador) {
+        Cliente.contador = contador;
     }
+
     public int getCod() {
         return cod;
     }
-    public String getDireccion() {
-        return direccion;
+    public void setCod(int cod) {
+        this.cod = cod;
     }
-    public LocalDate getNacimiento() {
-        return nacimiento;
-    }
-    public LocalDate getBaja() {
+
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
+
     public int getNalquiladas() {
         return nalquiladas;
     }
-
-    public int getNpeliculas(){
-        return nPelicula;
+    public void setNalquiladas(int nalquiladas) {
+        this.nalquiladas = nalquiladas;
     }
+
+    public int getnArticulos() {
+        return nArticulos;
+    }
+    public void setnArticulos(int nPelicula) {
+        this.nArticulos = nPelicula;
+    }
+
+    //MOSTRAMOS DATOS
     
-//MOSTRAMOS DATOS
-    public String InfoCliente(){//MOSTRAMOS LA INFO DEL CLIENTE
-        String getInfoCliente = String.format( 
-        "\nDNI: %s, Nombre: %s, Codigo: Soc-%s, Direccion: %s, F.Nacimiento %s, Nº Alquiladas %s",  
-        this.dni, this.nombre, this.cod, this.direccion, this.nacimiento, this.nalquiladas );
-        return getInfoCliente;
+    @Override
+    public String toString() {
+        return "Cliente [cod=" + cod + ", fechaBaja=" + fechaBaja + ", nalquiladas=" + nalquiladas + ", nArticulos="
+                + nArticulos + "]";
     }
 
     public String mostrarPeliculas(){ //MOSTRAMOS PELICULAS CLIENTE
         String peliculasAlquiladas = "";
-        for(int i = 0; i < nPelicula; i++){
-           peliculasAlquiladas += peliculasCliente[i].InfoPelicula();
+        for(int i = 0; i < nArticulos; i++){
+           peliculasAlquiladas += articulosCliente[i].toString();
            }
        return peliculasAlquiladas;
     }
 
-//MODIFICAMOS DATOS
-    public boolean addPelicula(Pelicula p){//AÑADIMOS UNA PELICULA
+    //MODIFICAMOS DATOS
+    public boolean addArticulo(Articulo p){//AÑADIMOS UNA PELICULA
         boolean isAdd = false;
         if (p != null){
-            this.peliculasCliente[nPelicula] = p;
+            this.articulosCliente[nArticulos] = p;
             nalquiladas++;
-            nPelicula++;
+            nArticulos++;
         }
         return isAdd;
     }
 
-    public boolean elimPelicula(Pelicula p){//ELIMINAMOS UNA PELICULA
+    public boolean elimArticulo(Articulo p){//ELIMINAMOS UNA PELICULA
         boolean isEliminated = false;
         if (p != null){
             nalquiladas--;

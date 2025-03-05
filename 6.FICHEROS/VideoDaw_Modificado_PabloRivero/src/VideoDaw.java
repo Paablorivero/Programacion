@@ -4,7 +4,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoDaw {
+public class VideoDaw extends Exception{
     // ATRIBUTOS
     private String cif;
     private String direccion;
@@ -46,20 +46,13 @@ public class VideoDaw {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<Articulo> getArticulosRegistrados() {
-        return articulosRegistrados;
-    }
-
-    public List<Cliente> getClientesRegistrados() {
-        return clientesRegistrados;
-    }
 
     // MÉTODOS PARA GESTIÓN DE CLIENTES
-    public boolean registrarCliente(Cliente cliente) throws ClienteExistenteException {
+    public boolean registrarCliente(Cliente cliente) throws ExcepcionesVideodaw {
         // Verificar si el cliente ya está registrado
         for (Cliente c : clientesRegistrados) {
             if (c.getDni().equals(cliente.getDni())) {
-            throw new ClienteExistenteException("El cliente con DNI " + cliente.getDni() + " ya está registrado.");
+            throw new ExcepcionesVideodaw("El cliente con DNI " + cliente.getDni() + " ya está registrado.");
             }
         }
         
@@ -67,7 +60,7 @@ public class VideoDaw {
         return true;
     }
 
-    public void darBajaCliente(Cliente cliente) {
+    public boolean darBajaCliente(Cliente cliente) {
         // Buscamos el cliente en la lista
         for (int i = 0; i < clientesRegistrados.size(); i++) {
             if (clientesRegistrados.get(i).getDni().equals(cliente.getDni())) {
@@ -75,34 +68,37 @@ public class VideoDaw {
                 clientesRegistrados.get(i).setFechaBaja(LocalDate.now());
             }
         }
+        return true;
     }
 
     // MÉTODOS PARA GESTIÓN DE ARTÍCULOS
-    public void registrarArticulo(Articulo articulo) {
+    public boolean registrarArticulo(Articulo articulo) {
         articulosRegistrados.add(articulo);
+        return true;
     }
 
-    public void darBajaArticulo(int codigoArticulo) {
+    public boolean darBajaArticulo(int codigoArticulo) {
         for (int i = 0; i < articulosRegistrados.size(); i++) {
             if (articulosRegistrados.get(i).getCodigo() == codigoArticulo) {
-                articulosRegistrados.get(i).darDeBaja();
+                articulosRegistrados.get(i).setFechaBaja(LocalDate.now());
             }
         }
+        return true;
     }
 
     // MÉTODOS DE ALQUILER Y DEVOLUCIÓN
-    public void alquilar(Cliente cliente, Articulo articulo) throws ArticuloAlquiladoException {
+    public boolean alquilar(Cliente cliente, Articulo articulo) throws ExcepcionesVideodaw {
         boolean isAlquilado = false;
         
         //Comrponamos si es pelicula o videojuego y si esta alquilado
         if (articulo instanceof Pelicula) {
             isAlquilado = ((Pelicula) articulo).isAlquilada();
-        } else if (articulo instanceof Videojuego) {
+        } else if (articulo instanceof  Videojuego){
             isAlquilado = ((Videojuego) articulo).isAlquilado();
         }
         
         if (isAlquilado == true) {
-            throw new ArticuloAlquiladoException("El artículo ya está alquilado");
+            throw new ExcepcionesVideodaw("El artículo ya está alquilado");
         }
 
         //Alquilamos el artículo
@@ -118,9 +114,10 @@ public class VideoDaw {
 
         //Añadimos el artículo a la lista de alquilados del cliente
         cliente.addArticulo(articulo);
+        return isAlquilado;
     }
 
-    public void devolver(Cliente cliente, Articulo articulo) throws TiempoExcedidoException {
+    public boolean devolver(Cliente cliente, Articulo articulo) throws ExcepcionesVideodaw {
         LocalDateTime fechaAlquiler = null;
         
         //Comprobamos si es pelicula o videojuego, obtenemos la fecha de alquiler y lo devolvemos
@@ -137,12 +134,13 @@ public class VideoDaw {
             long horasTranscurridas = ChronoUnit.HOURS.between(fechaAlquiler, LocalDateTime.now());
             
             if (horasTranscurridas > 48) {
-                throw new TiempoExcedidoException("Se ha excedido el tiempo máximo de alquiler (48 horas)");
+                throw new ExcepcionesVideodaw("Se ha excedido el tiempo máximo de alquiler (48 horas)");
             }
         }
 
         //Removemod el artículo de la lista de alquilados del cliente
         cliente.elimArticulo(articulo);
+        return true;
     }
 
     // MÉTODOS DE VISUALIZACIÓN
@@ -230,22 +228,11 @@ public class VideoDaw {
         return mostrarclientesRegistrados;
     }
 
-    // Clases de excepción personalizadas
-    public class ClienteExistenteException extends Exception {
-        public ClienteExistenteException(String mensaje) {
-            super(mensaje);
-        }
+    public Cliente obtenerClientePorPosicion(int pos){
+        return clientesRegistrados.get(pos);
     }
 
-    public class ArticuloAlquiladoException extends Exception {
-        public ArticuloAlquiladoException(String mensaje) {
-            super(mensaje);
-        }
-    }
-
-    public class TiempoExcedidoException extends Exception {
-        public TiempoExcedidoException(String mensaje) {
-            super(mensaje);
-        }
+    public Articulo obtenerArticuloPorPosicion(int pos){
+        return articulosRegistrados.get(pos);
     }
 }

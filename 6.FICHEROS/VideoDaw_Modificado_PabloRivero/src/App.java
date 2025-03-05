@@ -2,9 +2,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
-public class App {
+public class App{
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ExcepcionesVideodaw {
 		// TODO Auto-generated method stub
 
 	//VARIABLES
@@ -13,6 +13,7 @@ public class App {
 		
 		VideoDaw miFranquicia = null; //Variable para el videoclub
 		Pelicula nuevaPelicula = null; //Variable para las peliculas
+		Videojuego nuevoVideojuego = null;
 		Cliente nuevoCliente = null; //Variable para los clientes
 
 	//PATRONES DE DATOS
@@ -24,9 +25,9 @@ public class App {
 	//MENU PRINCIPAL
 		entrada = new Scanner(System.in);
 		System.out.println("\nBienvenido a VideoDaw, ¿Que deseas hacer?" +
-		"\n1.-Crear y Registrar Videoclub" + "\n2.-Registrar pelicula en videoclub" +
-		"\n3.-Crear y registrar cliente en videoclub" + "\n4.-Alquilar pelicula" +
-		"\n5.-Devolver pelicula" + "\n6.-Dar de baja cliente" +
+		"\n1.-Crear y Registrar Videoclub" + "\n2.-Registrar Articulo en videoclub" +
+		"\n3.-Crear y registrar cliente en videoclub" + "\n4.-Alquilar Articulo" +
+		"\n5.-Devolver Articulo" + "\n6.-Dar de baja cliente" +
 		"\n7.-Dar de baja articulo" + "\n8.-SALIR" );
 		opcion = entrada.nextLine();
 
@@ -48,8 +49,13 @@ public class App {
 			//REGISTRAR NUEVA PELICULA
 				case "2": 
 				if(miFranquicia != null){
-					System.out.println("\nREGISTRAR NUEVA PELICULA");	
+					System.out.println("\nREGISTRAR NUEVO ARTICULO");	
 
+					System.out.println("¿Vas a registrar una Pelicula o un Videojuego" + "\n 1.-Pelicula \n 2.-Videojuego");
+					String tipoRegistro = entrada.nextLine();
+
+					switch (tipoRegistro){
+						case "1" :
 					//Leemos datos
 					String titulo = myUtils.leerTextoPantalla("\nEscribe el titulo de la pelicula");
 
@@ -92,12 +98,65 @@ public class App {
 						System.out.println(nuevaPelicula.toString());
 						miFranquicia.registrarArticulo(nuevaPelicula);
 					}
-				}
-				else{
+					else{
 					System.out.println("Antes de añadir una pelicula, registre una franquicia por favor.");
-				}				
-					break;
+					}				
+							break;
+						case "2" :
+						System.out.println("Registrar Videojuego");
+						String tituloVideoJuego = myUtils.leerTextoPantalla("\nEscribe el titulo del Videojuego");
 
+					//Leemos el genero y creamos la pelicula
+					for(int i = 0; i < 1; i++){
+						System.out.println("\n¿Cual es el genero de la pelicula? " + "\n1.-SANDBOX" + 
+						"\n2.-ESTRATEGIA" + "\n3.-SHOOTER" + "\n4.-ROL" + "\n5.-SIMULACION " + "\n6.-PUZZLE");
+						
+						int nGenero = entrada.nextInt();
+
+						if (nGenero == 1){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.SANDBOX);	
+						}
+						if (nGenero == 2){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.ESTRATEGIA);
+						}
+						if (nGenero == 3){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.SHOOTER);
+						}
+						if (nGenero == 4){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.ROL);
+						}
+						if (nGenero == 5){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.SIMULACION);
+						}
+						if (nGenero == 6){
+							nuevoVideojuego = new Videojuego(tituloVideoJuego, GenerosVideojuego.PUZZLE);
+						}
+
+						//evitamos seleccionar un numero equivocado
+						else if(nGenero > 6 || nGenero < 1){
+							System.out.println("ERROR. El dato introducido es invalido");
+							i -= 1;
+						}
+					}
+
+					//Comprobamos que se haya registrado y mostramos pelicula
+					if (nuevoVideojuego != null){
+						System.out.println("Videojuego registrado correctamente");
+						System.out.println(nuevoVideojuego.toString());
+						miFranquicia.registrarArticulo(nuevoVideojuego);
+					}
+					else{
+					System.out.println("Antes de añadir un videojuego, registre una franquicia por favor.");
+					}				
+							break;
+
+						default:
+						System.out.println("Seleccione una opcion valida por favor");
+							break;
+					}
+
+					break;
+				}
 			//REGISTRAR CLIENTE
 				case "3":
 				if (miFranquicia != null){
@@ -155,16 +214,13 @@ public class App {
 					int pelicula = entrada.nextInt();
 
 						//alquilamos la pelicula
-						miFranquicia.alquilar(cliente, pelicula);
-						miFranquicia.obtenerClientePorPosicion(cliente).addPelicula
-						(miFranquicia.obtenerPeliculaPorPosicion(pelicula));
+						miFranquicia.alquilar(miFranquicia.obtenerClientePorPosicion(cliente), miFranquicia.obtenerArticuloPorPosicion(pelicula));
+						miFranquicia.obtenerClientePorPosicion(cliente).addArticulo
+						(miFranquicia.obtenerArticuloPorPosicion(pelicula));
 
 						//Mostramos las peliculas del cliente
 						System.out.println(miFranquicia.obtenerClientePorPosicion(cliente).mostrarPeliculas());	
-					} else {
-						System.out.println("La pelicula seleccionada ya esta alquilada");
-					
-				}else {
+					}else {
 					System.out.println("Para alquilar la pelicula, registra primero Peliculas en el videoclub.");
 					}
 				
@@ -174,8 +230,7 @@ public class App {
 				case "5": 
 
 				//Comprobamos que haya registrada una franquicia con clientes y peliculas
-				if( miFranquicia != null && miFranquicia.getNclientes() > 0 && 
-				nuevaPelicula != null && nuevoCliente != null){
+				if( miFranquicia != null && nuevaPelicula != null && nuevoCliente != null){
 
 					//Seleccionamos cliente
 					System.out.println("Quien va a devolver la pelicula");
@@ -191,9 +246,8 @@ public class App {
 						int bajapelicula = entrada.nextInt();
 
 						//Devolvemos la pelicula
-						miFranquicia.devolver(bajacliente, bajapelicula);
-						miFranquicia.obtenerClientePorPosicion(bajacliente).elimPelicula
-						(miFranquicia.obtenerPeliculaPorPosicion(bajapelicula));
+						miFranquicia.devolver(miFranquicia.obtenerClientePorPosicion(bajacliente),miFranquicia.obtenerArticuloPorPosicion(bajapelicula));
+						miFranquicia.obtenerClientePorPosicion(bajacliente).elimArticulo(miFranquicia.obtenerArticuloPorPosicion(bajapelicula));
 
 						//Mostramos el registro de peliculas del cliente
 						System.out.println("Registro movimientos: ");
@@ -219,7 +273,7 @@ public class App {
 		    	int numSocio = entrada.nextInt();
 
 				//Damos de baja al cliente seleccionado
-				miFranquicia.darBajaCliente(nuevoCliente, numSocio);
+				miFranquicia.darBajaCliente(miFranquicia.obtenerClientePorPosicion(numSocio));
 				} else{
 					System.out.println("No hay clientes registrados");
 				}
@@ -238,7 +292,7 @@ public class App {
 				int cod = entrada.nextInt();
 				
 				//Damos de baja la pelicula
-				miFranquicia.darBajaPelicula(nuevaPelicula, cod);
+				miFranquicia.darBajaArticulo(cod);
 				} else {
 					System.out.println("No hay peliculas registradas");
 				}
