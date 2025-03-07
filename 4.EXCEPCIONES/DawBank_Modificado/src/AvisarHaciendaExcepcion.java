@@ -1,3 +1,4 @@
+
 public class AvisarHaciendaExcepcion extends Exception {
     
     String titular;
