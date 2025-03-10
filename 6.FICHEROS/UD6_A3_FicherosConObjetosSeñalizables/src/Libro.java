@@ -42,4 +42,9 @@ public class Libro implements Serializable {
     public String toString() {
         return "Libro [isbn=" + this.isbn + ", titulo=" + this.titulo + ", Autor=" + this.Autor + "]";
     }
+
+    public Libro readObject() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readObject'");
+    }
 }

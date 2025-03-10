@@ -1,20 +1,27 @@
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
 		
-		ArrayList <Libro> listaLibros = new ArrayList<Libro>();
+		LinkedList <Libro> listaLibros = new LinkedList<Libro>();
         Scanner entrada = new Scanner(System.in);
         String opcion;
-
 		Libro libro = null;
+
+		//Variables para lectura y escritura de ficheros
+		FileInputStream MostrarFile;
+		ObjectInputStream MostrarBuffer;
+
 		FileOutputStream file;
  		ObjectOutputStream buffer;
-        
+
         do{
 	//MENU PRINCIPAL
 		entrada = new Scanner(System.in);
@@ -44,13 +51,48 @@ public class App {
 					listaLibros.add(libro);
 					break;
 
-			//REGISTRAR NUEVA PELICULA
+			//MOSTRAR LIBROS
 				case "2": 
-				//MOSTRAR LIBROS
+				
 					System.out.println("Mostrando los libros existentes en tu biblioteca");
 					for (Libro libro2 : listaLibros) {
 						System.out.println(libro2.toString());
 					}
+
+					//MOSTRAR LIBROS
+					// Abrir fichero para lectura
+ 					try {
+					entrada = new Scanner(System.in);
+ 					MostrarFile = new FileInputStream("./resources/biblioteca.dat");
+ 					MostrarBuffer = new ObjectInputStream(MostrarFile);
+
+					 ArrayList<Libro> librosLeidos = new ArrayList<>();
+ 					} catch (IOException e) {
+ 					System.out.println("No se ha podido abrir el fichero");
+ 					System.out.println(e.getMessage());
+ 					return;
+ 					}
+
+					// Lee el objeto guardado 
+					try {
+						for(Libro leerLibro : listaLibros){
+							leerLibro = (Libro) MostrarBuffer.readObject();
+							System.out.println("ISBN: " + leerLibro.getIsbn());
+							System.out.println("Titulo: " + leerLibro.getTitulo());
+							System.out.println("Autor: " + leerLibro.getAutor());
+						}
+					} catch (IOException e) {
+						System.out.println("Error al leer del fichero");
+						System.out.println(e.getMessage());
+					} 
+ 					// Cerrar el fichero
+ 					try {
+ 					MostrarBuffer.close();
+ 					MostrarFile.close();
+ 					} catch (IOException e) {
+ 					System.out.println("Error al cerrar el fichero");
+ 					System.out.println(e.getMessage());
+ 					} 
 					break;
 				
 			//ELIMINAR PELICULA(POR ISBN)
