@@ -44,7 +44,6 @@ public class Libro implements Serializable {
     }
 
     public Libro readObject() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readObject'");
     }
 }

@@ -95,21 +95,21 @@ public class App {
  					} 
 					break;
 				
-			//ELIMINAR PELICULA(POR ISBN)
+			//ELIMINAR LIBRO(POR ISBN)
 				case "3":
 					//PEDIMOS EL ISBN DEL LIBRO QUE QUEREMOS ELIMINAR
 					String isbnEliminar = myUtils.leerTextoPantalla("Introduce el ISBN del libro que quieres eliminar: ");
 
 					//RECORREMOS LA LISTA Y ELIMINAMOS CUANDO COINCIDA EL ISBN
-					for (int i = 0; i < listaLibros.size(); i++) {
-						if(listaLibros.get(i).getIsbn().equals(isbnEliminar)){
-							listaLibros.remove(i);
+					for (Libro libroElim : listaLibros) {
+						if(libroElim.getIsbn().equals(isbnEliminar)){
+							listaLibros.remove(libroElim.getIsbn());
 							System.out.println("Libro eliminado");
 						}
 					}
 					break;
 
-			//GUARDAR PELICULA
+			//GUARDAR LIBRO
 				case "4": 
 				// Abrir fichero para escritura
  				try {
