@@ -3,6 +3,8 @@ package com.decroly;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.producto;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -26,9 +28,11 @@ public class Main {
 
             switch (opcion) {
                 case "A":
-                    List<String> names = ProductoData.getNombreProducto();
 
-                    for(String nm : names){
+                System.out.println("\n" + "Productos en el inventario: ");
+                    List<producto> names = ProductoData.getProductos();
+
+                    for(producto nm : names){
                         System.out.println(nm);
                     }
         
