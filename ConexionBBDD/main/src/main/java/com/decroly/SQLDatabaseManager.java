@@ -18,7 +18,7 @@ public class SQLDatabaseManager {
 
     static {
         try (InputStream inputStream = SQLDatabaseManager.class.getClassLoader().getResourceAsStream("conexionBBDD.dat");
-             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
             URL = br.readLine();
             SCHEMA = br.readLine();
