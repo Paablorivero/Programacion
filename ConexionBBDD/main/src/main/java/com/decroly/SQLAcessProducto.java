@@ -176,33 +176,6 @@ public class SQLAcessProducto {
         return tipos;
     }
 
-    public List<producto> getProductoByReferencia(String referencia){//BUSCAR PRODUCTO POR REFERENCIA (FALTA ASIGNAR ATRIBUTOS)
-        List<producto> selProducto = new LinkedList<>();
-
-        String sqlStatement = "SELECT * FROM characters where heroName = ?";
-
-        try (Connection connection = SQLDatabaseManager.getConnection(); PreparedStatement statement = connection.prepareStatement(sqlStatement);) {
-
-            statement.setString(1, referencia);
-            ResultSet dataSet = statement.executeQuery();
-
-            while(dataSet.next()){
-                int id = dataSet.getInt(1);
-                String name = dataSet.getNString(2);
-                String fullname = dataSet.getNString(3);
-                String gender = dataSet.getNString(7);
-                String race = dataSet.getNString(8);
-                String aligment = dataSet.getNString(9);
-
-                producto c1 =  new producto(id, name, fullname, gender, race, aligment);
-                selProducto.add(c1);
-            }
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return selProducto;
-    }
     public int insertProducto(producto producto){//INSERTAR UN NUEVO PRODUCTO
         int response = -1;
         String sqlStatement = "INSERT INTO producto (id, referencia, nombre, descripcion, tipo, cantidad, precio, descuento, iva, aplicarDto)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -247,37 +220,27 @@ public class SQLAcessProducto {
         return response;
     }
 
-    public int deleteProducto(producto producto){//INSERTAR UN NUEVO PRODUCTO(SIN TERMINAR)
-        int response = -1;
-        String sqlStatement = "DELETE FROM producto (id, referencia, nombre, descripcion, tipo, cantidad, precio, descuento, iva, aplicarDto)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public int deleteProducto(String referencia){//INSERTAR UN NUEVO PRODUCTO
+        int element = -1;
+        String sqlStatement = "DELETE FROM producto WHERE referencia = ?";
 
         try (Connection connection = SQLDatabaseManager.getConnection(); PreparedStatement statement = connection.prepareStatement(sqlStatement);) {
 
-            statement.setInt(1, producto.getId());
-            statement.setNString(2, producto.getReferencia());
-            statement.setNString(3, producto.getNombre());
-            statement.setNString(4, producto.getDescripcion());
-            statement.setInt(5, producto.getTipo());
-            statement.setInt(6, producto.getCantidad());
-            statement.setDouble(7, producto.getPrecio());
-            statement.setInt(8, producto.getDescuento());
-            statement.setInt(9, producto.getIva());
-            statement.setBoolean(10, producto.isAplicarDto());
-
-            response = statement.executeUpdate();
+            statement.setNString(1,referencia);
+            element = statement.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        return response;
+        return element;
     }
 
     public int uptProducto(producto producto){//ACTUALIZAR UN PRODUCTO
         int response = -1;
-        String sqlStatement = "UPDATE characters set descripcion = ? , cantidad = ?, precio = ?, descuento = ?, aplicarDto = ? where referencia = ?";
+        String sqlStatement = "UPDATE producto set descripcion = ? , cantidad = ?, precio = ?, descuento = ?, aplicarDto = ? where referencia = ?";
 
         try (Connection connection = SQLDatabaseManager.getConnection(); PreparedStatement statement = connection.prepareStatement(sqlStatement);) {
+
             statement.setNString(1, producto.getDescripcion());
             statement.setInt(2, producto.getCantidad());
             statement.setDouble(3, producto.getPrecio());
@@ -288,7 +251,8 @@ public class SQLAcessProducto {
             statement.executeUpdate();
             
         } catch (Exception e) {
-            System.out.println("ERROR: "+e.getMessage());        }
+            System.out.println("ERROR: "+ e.getMessage());
+        }
         return response;
     }
 }

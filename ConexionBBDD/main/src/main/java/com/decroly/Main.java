@@ -102,31 +102,73 @@ public class Main {
                     break;
 
                 case "F"://Eliminar Producto por referencia
-                    System.out.println("F");
+                    System.out.println("Eliminar Producto por referencia");
+                    String selReferenciaEliminar = myUtils.leerTextoPantalla("Introduce la referencia del producto:");
+
+                    //Mostramos el producto a eliminar
+                    List<producto> confirmacionReferencia = ProductoData.getProductosPorReferencia(selReferenciaEliminar);
+                    if (confirmacionReferencia.isEmpty()) {
+                        System.out.println("No se ha encontrado el producto con la referencia: " + selReferenciaEliminar);
+                        break;
+                    }
+                    for(producto nr : confirmacionReferencia){
+                        System.out.println(nr);
+                    }
+
+                    //Confirmamos si queremos eliminar el producto
+                    String confirmacion = myUtils.leerTextoPantalla("¿Estas seguro de que quieres eliminar el producto? (Si/No):");
+                    
+                    if(confirmacion.equalsIgnoreCase("Si")){
+                        int responseEliminar = ProductoData.deleteProducto(selReferenciaEliminar);
+                        System.out.println("Se han eliminado " + responseEliminar + " elementos");
+                    }else{
+                        System.out.println("No se ha eliminado ningun producto");
+                    }
                     break;
 
                 case "G"://Actualizar producto
-                    System.out.println("Seleccionar producto a actualizar");
-                    List<producto> namesAct = ProductoData.getProductos();
+                    System.out.println("Selecciona la referencia del producto a actualizar");
+                    String selReferenciaActualizar = myUtils.leerTextoPantalla("Introduce la referencia del producto:");
 
-                    for(producto nm : namesAct){
+                    //Mostramos el producto a actualizar
+                    List<producto> confActualizar = ProductoData.getProductosPorReferencia(selReferenciaActualizar);
+                    for(producto nm : confActualizar){
                         System.out.println(nm);
                     }
-
-                    String referenciaAct = myUtils.leerTextoPantalla("Introduce la referencia del producto:");
-
-                    if (referencias.contains(referenciaAct)) {//Comprobamos si la referencia ya existe
-                        System.out.println("La referencia ya existe. No se puede insertar el producto.");
+                    if (confActualizar.isEmpty()) {
+                        System.out.println("No se ha encontrado el producto con la referencia: " + selReferenciaActualizar);
                         break;
                     }
-                    
-                    String descripcionAct = myUtils.leerTextoPantalla("Introduce la descripcion del producto:");
-                    int cantidadAct = myUtils.leerNumeroPantalla("Introduce la cantidad del producto:");
-                    double precioAct = myUtils.leerNumeroPantalla("Introduce el precio del producto:");
-                    int descuentoAct = myUtils.leerNumeroPantalla("Introduce el descuento del producto:");
-                    boolean aplicarDtoAct = myUtils.leerTextoPantalla("¿Aplicar descuento? (true/false):").equalsIgnoreCase("true");
 
-                    //Creamos el producto
+                    //Confirmamos si queremos actualizar el producto
+                    String confirmacionActualizar = myUtils.leerTextoPantalla("¿Estas seguro de que quieres actualizar el producto? (Si/No):");
+
+                    if(confirmacionActualizar.equalsIgnoreCase("Si")) {
+                        
+                        //Leemos los nuevos datos del producto
+                        String descripcionAct = myUtils.leerTextoPantalla("Introduce la descripcion del producto:");
+                        int cantidadAct = myUtils.leerNumeroPantalla("Introduce la cantidad del producto:");
+                        double precioAct = myUtils.leerNumeroPantalla("Introduce el precio del producto:");
+                        int descuentoAct = myUtils.leerNumeroPantalla("Introduce el descuento del producto:");
+                        boolean aplicarDtoAct = myUtils.leerTextoPantalla("¿Aplicar descuento? (true/false):").equalsIgnoreCase("true");
+
+                        //Actualizamos el producto
+                        miProducto =  confActualizar.get(0);
+                        miProducto.setDescripcion(descripcionAct);
+                        miProducto.setCantidad(cantidadAct);
+                        miProducto.setPrecio(precioAct);
+                        miProducto.setDescuento(descuentoAct);
+                        miProducto.setAplicarDto(aplicarDtoAct);
+                        
+                        int updProducto = ProductoData.uptProducto(miProducto);
+
+                        //Mostramos el producto actualizado
+                        System.out.println("Se han actualizado " + updProducto + " elementos");
+                        
+                    }else{
+                        System.out.println("No se ha actualizado ningun producto");
+                        break;
+                    }
                     
                     break;
 
