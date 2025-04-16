@@ -1,5 +1,7 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App{
@@ -9,7 +11,6 @@ public class App{
 
 	//VARIABLES
 		Scanner entrada = new Scanner(System.in);
-		String opcion; //Creamos un String opcion para la seleccion del menu
 		
 		VideoDaw miFranquicia = null; //Variable para el videoclub
 		Pelicula nuevaPelicula = null; //Variable para las peliculas
@@ -20,17 +21,24 @@ public class App{
 		final String patronCif = "[A-Z]{1}[0-9]{8}"; //Patron para el CIF
 		final String patronDNI = "[0-9]{8}[A-Z]{1}"; //Patron para el DNI
 
+	//MENU DE OPCIONES
+		List<String> opciones1 = new LinkedList<>();
+        opciones1.add("A - Mostrar todos los Productos en el Inventario.");
+        opciones1.add("B - Buscar producto por referencia.");
+        opciones1.add("C - Buscar productos por tipo.");
+        opciones1.add("D - Buscar producto por cantidad.");
+        opciones1.add("E - Insertar un nuevo producto");
+        opciones1.add("F - Eliminar Producto por referencia.");
+        opciones1.add("G - Actualizar producto");
+        opciones1.add("H - Insertar un nuevo tipo de producto.");
+        opciones1.add("S - SALIR");
+        String opcion = "";
+
 //PROGRAMA GESTION VIDEODAW
 	do{
 	//MENU PRINCIPAL
-		entrada = new Scanner(System.in);
-		System.out.println("\nBienvenido a VideoDaw, ¿Que deseas hacer?" +
-		"\n1.-Crear y Registrar Videoclub" + "\n2.-Registrar Articulo en videoclub" +
-		"\n3.-Crear y registrar cliente en videoclub" + "\n4.-Alquilar Articulo" +
-		"\n5.-Devolver Articulo" + "\n6.-Dar de baja cliente" +
-		"\n7.-Dar de baja articulo" + "\n8.-SALIR" );
-		opcion = entrada.nextLine();
-
+		
+		opcion = myUtils.generarMenu(opciones1);
 		//OPCIONES DEL MENU POR SELECCION
 			switch (opcion) {
 			//REGISTRAR NUEVA FRANQUICIA

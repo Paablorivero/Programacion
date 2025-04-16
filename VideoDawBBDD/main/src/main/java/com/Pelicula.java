@@ -1,37 +1,36 @@
 package com;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 public class Pelicula extends Articulo{
 
     //ATRIBUTOS
-    private Generos genero;
-    private LocalDateTime fechaAlquiler;
+    private String genero;
+    private Date fechaAlquiler;
     private boolean isAlquilada;
 
     //CONSTRUCTORES
-    public Pelicula(String titulo, Generos genero){
-        super(titulo);
+
+    public Pelicula(int cod, String titulo, String descripcion, Date fechaRegistro, String genero, boolean alquilada) {
+        super(cod, titulo, descripcion, fechaRegistro);
         this.genero = genero;
-        this.fechaAlquiler = null;
-        this.isAlquilada = false;
+        this.isAlquilada = alquilada;
     }
 
-    public Generos getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(Generos genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public LocalDateTime getFechaAlquiler() {
+    public Date getFechaAlquiler() {
         return fechaAlquiler;
     }
 
-    public void setFechaAlquiler(LocalDateTime fechaAlquiler) {
+    public void setFechaAlquiler(Date fechaAlquiler) {
         this.fechaAlquiler = fechaAlquiler;
     }
 
@@ -43,10 +42,12 @@ public class Pelicula extends Articulo{
         this.isAlquilada = isAlquilada;
     }
 
-    //METODOS PARA MOSTAR INFO
     @Override
     public String toString() {
-        return "Pelicula [genero=" + genero + ", fechaAlquiler=" + fechaAlquiler + ", isAlquilada=" 
-        + isAlquilada + "]";
+        return "Pelicula [codigo=" + codigo + ", titulo=" + titulo + ", fechaRegistro=" + fechaRegistro +
+        ", genero=" + genero + ", isAlquilada=" + isAlquilada + "]";
     }
+
+
+    
 }

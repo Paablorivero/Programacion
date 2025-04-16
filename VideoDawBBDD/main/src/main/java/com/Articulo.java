@@ -1,13 +1,14 @@
 package com;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Articulo{
 
-    private int codigo;
-    private String titulo;
-    private LocalDate fechaRegistro;
-    private LocalDate fechaBaja;
+    public int codigo;
+    public String titulo;
+    public String descripcion;
+    public Date fechaRegistro;
+    public Date fechaBaja;
 
     private static int contador = 0;
 
@@ -15,8 +16,15 @@ public class Articulo{
         this.codigo = this.contador;
         this.contador++;
         this.titulo = titulo;
-        this.fechaRegistro = LocalDate.now();
+        this.fechaRegistro = new Date();
         this.fechaBaja = null;
+    }
+
+    public Articulo(int codigo, String titulo, String descipcion, Date fechaRegistro) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.descripcion = descipcion;
+        this.fechaRegistro = fechaRegistro;
     }
 
     public int getCodigo() {
@@ -35,19 +43,19 @@ public class Articulo{
         this.titulo = titulo;
     }
 
-    public LocalDate getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

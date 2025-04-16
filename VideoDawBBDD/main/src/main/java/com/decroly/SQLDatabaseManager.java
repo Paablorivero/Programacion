@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.stream.Collectors;
 
 public class SQLDatabaseManager {
 
