@@ -3,99 +3,102 @@ package com.decroly;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.Alquiler;
 import com.Articulo;
+import com.Cliente;
 import com.Pelicula;
 
 public class Main {
     public static void main(String[] args) {
-        SQLAcessVideoDaw ProductoData = new SQLAcessVideoDaw();
+        SQLAcessVideoDaw VideoDawData = new SQLAcessVideoDaw();
         Pelicula miPelicula;
-        //tipo TipoProducto;
-        //List<String> referencias = ProductoData.getReferencias();
-
-        //MENUS 
+        List<Alquiler> alquileres = new LinkedList<>();
+        
+        //MENU
         List<String> principal = new LinkedList<>();
-        principal.add("A - Mostrar datos de la franquicia.");
-        principal.add("B - Buscar datos en la franquicia.");
-        principal.add("C - Actualizar datos de la franquicia.");
-        principal.add("D - Alquilar articulo.");
+        principal.add("A - Mostrar todos los Articulos en el Inventario.");
+        principal.add("B - Mostrar articulos disponibles.");
+        principal.add("C - Buscar articulo por codigo.");
+        principal.add("D - Buscar cliente por codigo");
+        principal.add("E - Alquilar articulo.");
+        principal.add("F -  Devolver articulo.");
         principal.add("S - SALIR");
         String Principal = "";
-
-        List<String> menuInfo = new LinkedList<>();
-        menuInfo.add("A - Mostrar todos los Articulos en el Inventario.");
-        menuInfo.add("B - Mostrar todos los empleados en la franquicia.");
-        menuInfo.add("C - Mostrar todos los clientes en la franquicia.");
-        menuInfo.add("D - Mostrar Articulos disponibles para alquilar.");
-        String seleccionInfo = "";
-
-        List<String> menuBuscar = new LinkedList<>();
-        menuBuscar.add("A - Buscar articulo por codigo.");
-        menuBuscar.add("B - Buscar cliente por codigo");
-        menuBuscar.add("C - Buscar empleado por codigo.");
-        menuBuscar.add("D - Buscar articulo por fecha de registro.");
-        menuBuscar.add("E - Buscar peliculas alquiladas de un cliente.");
-        String seleccionBuscar = "";
-        
-        List<String> menuUpdt = new LinkedList<>();
-        menuUpdt.add("A - Añadir cliente en la franquicia.");
-        menuUpdt.add("B - Añadir empleado en la franquicia.");
-        menuUpdt.add("C - Dar de baja un cliente.");
-        menuUpdt.add("D - Dar de baja un empleado.");
-        menuUpdt.add("D - Añadir un articulo a la franquicia.");
-        menuUpdt.add("E - Dar de baja un articulo.");
-        String seleccionUpdt = "";
 
         do {
             Principal = myUtils.generarMenu(principal);
             System.out.println("Opcion escogida: "+Principal);
-
             switch (Principal) {
-                //MOSTRAMOS INFORMACION 
-                case "A":
-                    seleccionInfo = myUtils.generarMenu(menuInfo);
-                    System.out.println("Opcion escogida: "+seleccionInfo);
+                
+                case "A": //MOSTRAMOS todos los articulos
+                    System.out.println("\n" + "Articulos en el inventario: ");
+                    List<Articulo> names = VideoDawData.getArticulos();
 
-                    switch (seleccionInfo) {
-                        case "A":
-                            System.out.println("Mostrar todos los Articulos en el Inventario.");
-                            List<Articulo> peliculas = ProductoData.getPeliculas();
-
-                            for(Articulo p : peliculas){
-                                System.out.println(p);
-                            }
-                            break;
-
-                        default:
-                            System.out.println("Opcion no valida, por favor seleccione una opcion valida.");
-                            break;
-                    
-                    
+                    for(Articulo nm : names){
+                        System.out.println(nm);
                     }
-                    
-
                     break;
 
-                //BUSCAMOS INFORMACION 
-                case "B":
-                    seleccionBuscar = myUtils.generarMenu(menuBuscar);
-                    System.out.println("Opcion escogida: "+seleccionBuscar);
+                case "B": //Mostramos articulos disponibles
+                    System.out.println("Peliculas disponibles: \n");
+                        List<Articulo> pelisNA = VideoDawData.getPeliculasNoAlquiladas();
 
+                        for(Articulo nm : pelisNA){
+                            System.out.println(nm);
+                        }
+
+                    System.out.println("\nVideojuegos disponibles: \n");
+                        List<Articulo> videojuegossNA = VideoDawData.getVideoJuegosNA();
+
+                        for(Articulo nm : videojuegossNA){
+                            System.out.println(nm);
+                        }
+                    break;
+                
+                case "C": //Buscamos articulo por codigo
+                    System.out.println("Buscar articulo por codigo");
+                    int cod = myUtils.leerNumeroPantalla("Introduce el codigo del articulo");
+
+                    List<Articulo> artCod = VideoDawData.getArticuloCodigo(cod);
+
+                    for(Articulo nm : artCod){
+                        System.out.println(nm);
+                    }
+                    break;
+                
+                case "D": //Buscamos cliente por codigo
+                    System.out.println("Buscar cliente por codigo");
+                    int codCliente = myUtils.leerNumeroPantalla("Introduce el codigo del cliente");
+
+                    List<Cliente> clienteCod = VideoDawData.getClienteCod(codCliente);
+
+                    for(Cliente c : clienteCod){
+                        System.out.println(c);
+                    }
                     break;
 
-                //ACTUALIZAMOS INFORMACION
-                case "C":
-                    seleccionUpdt = myUtils.generarMenu(menuUpdt);
-                    System.out.println("Opcion escogida: "+seleccionUpdt);
+                case "E": //Alquilar articulo
+                    System.out.println("Alquilar articulo");
+                    int Cliente = myUtils.leerNumeroPantalla("Introduce el codigo del cliente que va a alquilar");
+                    int Art = myUtils.leerNumeroPantalla("Introduce el codigo del articulo a alquilar");
 
+                    Alquiler alquiler = new Alquiler(Cliente, Art);
+                    alquileres.add(alquiler);
+                    int response = VideoDawData.insertAlquiler(alquiler);
+                    int estado = VideoDawData.actEstadoTrue(Art);
+
+                    System.out.println("Se ha insertado " + response + " elementos");
                     break;
 
-                //ALQUILAMOS ARTICULOS
-                case "D":
-                    System.out.println("Alquilar Articulo");
+                case "F": //Devolver articulo
+                    int codAlquiler = myUtils.leerNumeroPantalla("Introduce el codigo del alquiler");
+                    Alquiler alq = alquileres.get(codAlquiler);
+
+                    int response2 = VideoDawData.insertDevolucion(alq);
+                    int estado2 = VideoDawData.actEstadoFalse(alq.getCodArticulo());
+                    System.out.println("Se ha insertado " + response2 + " elementos");
                     break;
 
-                //SALIMOS DEL PROGRAMA
                 case "S"://Salir
                     System.out.println("Saliendo del programa.");
                     break;

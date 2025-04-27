@@ -4,27 +4,30 @@ import java.util.Date;
 
 public class Articulo{
 
-    public int codigo;
-    public String titulo;
-    public String descripcion;
-    public Date fechaRegistro;
-    public Date fechaBaja;
+    private int codigo;
+    private String titulo;
+    private String descripcion;
+    private Date fechaRegistro;
+    private Date fechaBaja;
+    private String tipo;
+    private boolean isAlquilada; 
 
     private static int contador = 0;
 
-    public Articulo(String titulo){
-        this.codigo = this.contador;
-        this.contador++;
-        this.titulo = titulo;
-        this.fechaRegistro = new Date();
-        this.fechaBaja = null;
-    }
-
-    public Articulo(int codigo, String titulo, String descipcion, Date fechaRegistro) {
+    public Articulo(int codigo, String titulo, String descripcion, Date fechaRegistro, String tipo, boolean isAlquilada) {
         this.codigo = codigo;
         this.titulo = titulo;
-        this.descripcion = descipcion;
+        this.descripcion = descripcion;
         this.fechaRegistro = fechaRegistro;
+        this.tipo = tipo;
+        this.isAlquilada = isAlquilada;
+    }
+
+    public Articulo(int codigo, String titulo, String descripcion, String tipo) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
     }
 
     public int getCodigo() {
@@ -59,9 +62,17 @@ public class Articulo{
         this.fechaBaja = fechaBaja;
     }
 
+    public boolean isAlquilada() {
+        return isAlquilada;
+    }
+
+    public void setAlquilada(boolean isAlquilada) {
+        this.isAlquilada = isAlquilada;
+    }
+
     @Override
     public String toString() {
-        return "Articulo [codigo=" + codigo + ", titulo=" + titulo + ", fechaRegistro=" + 
-        fechaRegistro + ", fechaBaja=" + fechaBaja + "]";
+        return "Articulo [codigo=" + codigo + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fechaRegistro="
+                + fechaRegistro + ", fechaBaja=" + fechaBaja + ", tipo=" + tipo + ", isAlquilada=" + isAlquilada + "]";
     }
 }

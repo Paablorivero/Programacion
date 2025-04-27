@@ -1,17 +1,17 @@
 package com;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Videojuego extends Articulo{
+
+    private int cod;
     private GenerosVideojuego genero;
-    private LocalDateTime fechaAlquiler;
-    private boolean isAlquilado;
     
-    public Videojuego(String titulo, GenerosVideojuego genero) {
-        super(titulo);
+    public Videojuego(int codigo, String titulo, String descripcion, Date fechaRegistro, String tipo, boolean isAlquilada,
+    int cod, GenerosVideojuego genero) {
+        super(codigo, titulo, descripcion, fechaRegistro, tipo, isAlquilada);
+        this.cod = cod;
         this.genero = genero;
-        this.fechaAlquiler = null;
-        this.isAlquilado = false;
     }
 
     public GenerosVideojuego getGenero() {
@@ -22,25 +22,8 @@ public class Videojuego extends Articulo{
         this.genero = genero;
     }
 
-    public LocalDateTime getFechaAlquiler() {
-        return fechaAlquiler;
-    }
-
-    public void setFechaAlquiler(LocalDateTime fechaAlquiler) {
-        this.fechaAlquiler = fechaAlquiler;
-    }
-
-    public boolean isAlquilado() {
-        return isAlquilado;
-    }
-
-    public void setAlquilado(boolean isAlquilado) {
-        this.isAlquilado = isAlquilado;
-    }
-
     @Override
     public String toString() {
-        return "Videojuego [genero=" + this.genero + ", fechaAlquiler=" + this.fechaAlquiler + ", isAlquilado=" 
-        + this.isAlquilado + "]";
+        return "Videojuego [cod=" + cod + ", genero=" + genero + "]";
     }
 }
