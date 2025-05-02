@@ -134,14 +134,13 @@ public class SQLAcessVideoDaw {
             ResultSet dataSet = statement.executeQuery();
     
             while(dataSet.next()) {
-                int cod = dataSet.getInt(1);
                 String dni = dataSet.getString(2); 
                 String nombre = dataSet.getString(3); 
                 String direccion = dataSet.getNString(4);
                 Date fechaNacimiento = dataSet.getDate(5); 
 
                 
-                Cliente c1 = new Cliente(cod, dni, nombre, direccion, fechaNacimiento);
+                Cliente c1 = new Cliente(dni, nombre, direccion, fechaNacimiento);
                 ClienteCod.add(c1);
             }
             
@@ -190,7 +189,7 @@ public class SQLAcessVideoDaw {
 
     public int insertDevolucion(Alquiler alquiler) { 
         int response = -1;
-        String getAlquiler = "UPDATE Alquiler SET fecha_devolucion = CURDATE() " +
+        String getAlquiler = "UPDATE Alquiler SET fecha_devolucion = CURDATE(), alquilada = FALSE " +
         "WHERE cod_articulo = ? AND fecha_devolucion IS NULL;";
     
         try (Connection connection = SQLDatabaseManager.getConnection(); 
@@ -206,9 +205,32 @@ public class SQLAcessVideoDaw {
         return response;
     }
 
-    public int actEstadoFalse (int cod) { 
+    public int insertarCliente (Cliente cliente){
         int response = -1;
-        String getAlquiler = "UPDATE Articulo SET alquilada = FALSE WHERE cod = ?";
+        String getCliente = "INSERT INTO Cliente (cod, dni, nombre, direccion, fecha_nacimiento) " +
+        "VALUES (?, ?, ?, ?, ?);";
+    
+        try (Connection connection = SQLDatabaseManager.getConnection(); 
+             PreparedStatement statement = connection.prepareStatement(getCliente)) {
+    
+            statement.setInt(1, cliente.getCod());
+            statement.setString(2, cliente.getDni()); 
+            statement.setString(3, cliente.getNombre());
+            statement.setString(4, cliente.getDireccion());
+            statement.setDate(5, (java.sql.Date) cliente.getFechaNacimiento());
+
+            response = statement.executeUpdate();
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return response;
+    }
+
+    public int bajaCliente (int cod) { 
+        int response = -1;
+        String getAlquiler = "UPDATE Cliente SET fecha_baja = CURDATE() WHERE cod = ?";
     
         try (Connection connection = SQLDatabaseManager.getConnection(); 
              PreparedStatement statement = connection.prepareStatement(getAlquiler)) {
@@ -222,5 +244,29 @@ public class SQLAcessVideoDaw {
         }
         return response;
     }
-    
+
+    public List<Cliente> getClientes(){//METODO PARA MOSTRAR TODOS LOS ARTICULOS
+        List<Cliente> Cliente = new LinkedList<>();
+
+        String getCLientes =   "SELECT c.cod, c.dni, c.nombre FROM Cliente c WHERE c.fecha_baja = '9999-01-01';";
+
+        try (Connection connection = SQLDatabaseManager.getConnection(); Statement statement = connection.createStatement();
+        ResultSet dataSet = statement.executeQuery(getCLientes);) {
+            while(dataSet.next()){
+                int cod = dataSet.getInt(1);
+                String dni = dataSet.getNString(2);
+                String nombre = dataSet.getNString(3);
+
+
+                Cliente p1 =  new Cliente(cod, dni, nombre);
+                Cliente.add(p1);
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Cliente;
+    }
+
+
 }

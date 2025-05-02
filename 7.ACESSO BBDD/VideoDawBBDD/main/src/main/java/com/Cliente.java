@@ -15,14 +15,20 @@ public class Cliente{
     private int nalquiladas;
     private int nArticulos;
 
-    public Cliente(int cod, String dni, String nombre, String direccion, Date fechaNacimiento) {
-        this.cod = cod; 
-        cod++; 
+    public Cliente(String dni, String nombre, String direccion, Date fechaNacimiento) {
+        this.cod = contador; 
+        contador++; 
         this.dni = dni;
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
-        
+    }
+
+    public Cliente(int cod, String dni, String nombre){
+        this.cod = cod;
+        this.dni = dni;
+        this.nombre = nombre;
+
     }
 
     public int getCod() {

@@ -1,4 +1,6 @@
 package com.decroly;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -49,11 +51,30 @@ public class myUtils extends Exception{
         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
         myUtils.imprimir("Escribe la fecha de nacimiento en formato DD/MM/AAAA");
         String dateString = entrada.nextLine();
-        //convert String to LocalDate
+
         LocalDate fechaLocalDate = LocalDate.parse(dateString, formatter);
         
         return fechaLocalDate;
     }
+
+    public static Date leerFechaSql(String mensaje) {
+    Scanner entrada = new Scanner(System.in);
+
+    System.out.println(mensaje);
+    String dateString = entrada.nextLine();
+
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date utilDate = dateFormat.parse(dateString);
+        
+        Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return sqlDate;
+
+    } catch (Exception e) {
+        System.out.println("Error: Formato de fecha incorrecto. dd/MM/yyyy");
+        return leerFechaSql(mensaje); 
+    }
+}
     
     public static int leerNumeroPantalla(String mensaje){//LEEMOS UN NUMERO
         Scanner reader = new Scanner(System.in);

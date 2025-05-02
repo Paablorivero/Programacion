@@ -1,5 +1,6 @@
 package com.decroly;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +22,9 @@ public class Main {
         principal.add("C - Buscar articulo por codigo.");
         principal.add("D - Buscar cliente por codigo");
         principal.add("E - Alquilar articulo.");
-        principal.add("F -  Devolver articulo.");
+        principal.add("F - Devolver articulo.");
+        principal.add("G - Añadir nuevo cliente.");
+        principal.add("H - Dar de baja cliente");
         principal.add("S - SALIR");
         String Principal = "";
 
@@ -91,14 +94,45 @@ public class Main {
                     break;
 
                 case "F": //Devolver articulo
-                    int codAlquiler = myUtils.leerNumeroPantalla("Introduce el codigo del alquiler");
+
+                    for (Alquiler a : alquileres){
+                        System.out.println(a);
+                    }
+                    int codAlquiler = myUtils.leerNumeroPantalla("Introduce el id del alquiler");
                     Alquiler alq = alquileres.get(codAlquiler);
 
                     int response2 = VideoDawData.insertDevolucion(alq);
-                    int estado2 = VideoDawData.actEstadoFalse(alq.getCodArticulo());
                     System.out.println("Se ha insertado " + response2 + " elementos");
+                    
                     break;
 
+
+                case "G"://Registrar nuevo cliente
+                    System.out.println("Regsitrar nuevo cliente");
+                    String dni = myUtils.leerTextoPantalla("Introduce el dni del cliente");
+                    String nombre = myUtils.leerTextoPantalla("Introduce el nombre del cliente");
+                    String direccion = myUtils.leerTextoPantalla("Introduce la direccion");
+                    Date fNacimiento = myUtils.leerFechaSql("Introduce la fecha de cumpleaños");
+
+                    Cliente cliente = new Cliente(dni, nombre, direccion, fNacimiento);
+                    int insertCliente = VideoDawData.insertarCliente(cliente);
+                    System.out.println("Se ha insertado " + insertCliente + " elementos");
+                    break;
+                    
+                case"H"://Dar de baja cliente
+                    System.out.println("Dar de baja cliente");
+                    System.out.println("\n" + "Clientes registrados:");
+                    List<Cliente> Clientes = VideoDawData.getClientes();
+
+                    for(Cliente nm : Clientes){
+                        System.out.println(nm);
+                    }
+
+                    int codigo = myUtils.leerNumeroPantalla("Introduce el codigo del cliente");
+                    int bajaCliente = VideoDawData.bajaCliente(codigo);
+                    System.out.println("Se ha insertado " + bajaCliente + " elementos");
+                    break;
+                    
                 case "S"://Salir
                     System.out.println("Saliendo del programa.");
                     break;
